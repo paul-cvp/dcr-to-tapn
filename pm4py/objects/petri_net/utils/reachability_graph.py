@@ -80,7 +80,7 @@ def marking_flow_petri(net, im, return_eventually_enabled=False, parameters=None
     print(type(im))
     seen_before.add(hash(im))
     while active:
-        print(f'[i] len seen before: {len(seen_before)} len active: {len(active)}')
+        # print(f'[i] len seen before: {len(seen_before)} len active: {len(active)}')
         if (time.time() - start_time) >= max_exec_time:
             # interrupt the execution
             return incoming_transitions, outgoing_transitions, eventually_enabled
