@@ -47,6 +47,29 @@ def read_xes(file_path: str) -> EventLog:
     return log
 
 
+def read_tapn(file_path: str) -> Tuple[PetriNet, Marking, Marking]:
+    """
+    Reads a Petri net from the .PNML format
+
+    Parameters
+    ----------------
+    file_path
+        File path
+
+    Returns
+    ----------------
+    petri_net
+        Petri net object
+    initial_marking
+        Initial marking
+    final_marking
+        Final marking
+    """
+    from pm4py.objects.petri_net.importer import importer as tapn_importer
+    from pm4py.objects.petri_net.importer.importer import Variants
+    net, im, fm = tapn_importer.apply(file_path, variant=Variants.TAPN)
+    return net, im, fm
+
 def read_pnml(file_path: str) -> Tuple[PetriNet, Marking, Marking]:
     """
     Reads a Petri net from the .PNML format

@@ -188,7 +188,8 @@ def graphviz_visualization(net, image_format="png", initial_marking=None, final_
         if petri_properties.ARCTYPE in a.properties:
             if a.properties[petri_properties.ARCTYPE] == petri_properties.RESET_ARC:
                 arrowhead = "vee"
-            elif a.properties[petri_properties.ARCTYPE] == petri_properties.INHIBITOR_ARC:
+            elif a.properties[petri_properties.ARCTYPE] == petri_properties.INHIBITOR_ARC\
+                    or a.properties[petri_properties.ARCTYPE] == 'tapnInhibitor':
                 arrowhead = "dot"
             elif a.properties[petri_properties.ARCTYPE] == petri_properties.TRANSPORT_ARC:
                 arrowhead = "diamond"

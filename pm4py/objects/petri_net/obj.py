@@ -226,6 +226,11 @@ class PetriNet(object):
     def __get_transitions(self):
         return self.__transitions
 
+    def get_transition_by_id(self, id : str = None):
+        for t in self.__transitions:
+            if t.name == id:
+                return t
+
     def __get_arcs(self):
         return self.__arcs
 

@@ -215,8 +215,14 @@ def export_petri_tree(petrinet, marking, final_marking=None, export_prom5=False,
     k_bound.set("bound","3")
 
     feature = etree.SubElement(root, "feature")
-    feature.set("isGame","false")
-    feature.set("isTimed","true")
+    feature.set("isGame", "false")
+    if parameters and 'isTimed' in parameters:
+        if parameters['isTimed']:
+            feature.set("isTimed", "true")
+        else:
+            feature.set("isTimed", "false")
+    else:
+        feature.set("isTimed", "false")
 
     tree = etree.ElementTree(root)
 

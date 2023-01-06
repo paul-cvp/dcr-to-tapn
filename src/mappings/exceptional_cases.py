@@ -143,13 +143,13 @@ class ExceptionalCases(object):
                                     G[rel][e].remove(e_prime)
         return G
 
-    def map_exceptional_cases_between_events(self, tapn) -> PetriNet:
+    def map_exceptional_cases_between_events(self, tapn,m=None) -> PetriNet:
         for exception, pairs in self.exceptions.items():
             if len(pairs) > 0:
-                tapn = self.apply_exceptions[exception](tapn)
+                tapn = self.apply_exceptions[exception](tapn,m)
         return tapn
 
-    def create_exception_condition_milestone_exclude_response_pattern(self, tapn) -> PetriNet:
+    def create_exception_condition_milestone_exclude_response_pattern(self, tapn,m=None) -> PetriNet:
         for (event, event_prime) in self.exceptions[frozenset([E, R, C, M])]:
             inc_place_e_prime = self.helper_struct[event_prime]['places']['included']
             exec_place_e_prime = self.helper_struct[event_prime]['places']['executed']
@@ -190,7 +190,7 @@ class ExceptionalCases(object):
             self.helper_struct[event]['transitions'].extend(new_transitions)
         return tapn
 
-    def create_exception_condition_milestone_exclude_no_response_pattern(self, tapn) -> PetriNet:
+    def create_exception_condition_milestone_exclude_no_response_pattern(self, tapn,m=None) -> PetriNet:
         for (event, event_prime) in self.exceptions[frozenset([E, N ,C, M])]:
             inc_place_e_prime = self.helper_struct[event_prime]['places']['included']
             exec_place_e_prime = self.helper_struct[event_prime]['places']['executed']
@@ -228,7 +228,7 @@ class ExceptionalCases(object):
             self.helper_struct[event]['transitions'].extend(new_transitions)
         return tapn
 
-    def create_exception_condition_milestone_include_response_pattern(self, tapn) -> PetriNet:
+    def create_exception_condition_milestone_include_response_pattern(self, tapn,m=None) -> PetriNet:
         for (event, event_prime) in self.exceptions[frozenset([I, R, C, M])]:
             inc_place_e_prime = self.helper_struct[event_prime]['places']['included']
             exec_place_e_prime = self.helper_struct[event_prime]['places']['executed']
@@ -270,7 +270,7 @@ class ExceptionalCases(object):
             self.helper_struct[event]['transitions'].extend(new_transitions)
         return tapn
 
-    def create_exception_condition_milestone_include_no_response_pattern(self, tapn) -> PetriNet:
+    def create_exception_condition_milestone_include_no_response_pattern(self, tapn,m=None) -> PetriNet:
         for (event, event_prime) in self.exceptions[frozenset([I, N ,C, M])]:
             inc_place_e_prime = self.helper_struct[event_prime]['places']['included']
             exec_place_e_prime = self.helper_struct[event_prime]['places']['executed']
@@ -310,7 +310,7 @@ class ExceptionalCases(object):
             self.helper_struct[event]['transitions'].extend(new_transitions)
         return tapn
 
-    def create_exception_condition_milestone_response_pattern(self, tapn) -> PetriNet:
+    def create_exception_condition_milestone_response_pattern(self, tapn,m=None) -> PetriNet:
         for (event, event_prime) in self.exceptions[frozenset([R, C, M])]:
             inc_place_e_prime = self.helper_struct[event_prime]['places']['included']
             exec_place_e_prime = self.helper_struct[event_prime]['places']['executed']
@@ -351,7 +351,7 @@ class ExceptionalCases(object):
             self.helper_struct[event]['transitions'].extend(new_transitions)
         return tapn
 
-    def create_exception_condition_milestone_no_response_pattern(self, tapn) -> PetriNet:
+    def create_exception_condition_milestone_no_response_pattern(self, tapn,m=None) -> PetriNet:
         for (event, event_prime) in self.exceptions[frozenset([N ,C, M])]:
             inc_place_e_prime = self.helper_struct[event_prime]['places']['included']
             exec_place_e_prime = self.helper_struct[event_prime]['places']['executed']
@@ -390,7 +390,7 @@ class ExceptionalCases(object):
             self.helper_struct[event]['transitions'].extend(new_transitions)
         return tapn
 
-    def create_exception_condition_milestone_include_pattern(self, tapn) -> PetriNet:
+    def create_exception_condition_milestone_include_pattern(self, tapn,m=None) -> PetriNet:
         for (event, event_prime) in self.exceptions[frozenset([I ,C, M])]:
             inc_place_e_prime = self.helper_struct[event_prime]['places']['included']
             exec_place_e_prime = self.helper_struct[event_prime]['places']['executed']
@@ -431,7 +431,7 @@ class ExceptionalCases(object):
             self.helper_struct[event]['transitions'].extend(new_transitions)
         return tapn
 
-    def create_exception_condition_milestone_exclude_pattern(self, tapn) -> PetriNet:
+    def create_exception_condition_milestone_exclude_pattern(self, tapn,m=None) -> PetriNet:
         for (event, event_prime) in self.exceptions[frozenset([E, C, M])]:
             inc_place_e_prime = self.helper_struct[event_prime]['places']['included']
             exec_place_e_prime = self.helper_struct[event_prime]['places']['executed']
@@ -463,7 +463,7 @@ class ExceptionalCases(object):
             self.helper_struct[event]['transitions'].extend(new_transitions)
         return tapn
 
-    def create_exception_milestone_no_response_include_pattern(self, tapn) -> PetriNet:
+    def create_exception_milestone_no_response_include_pattern(self, tapn,m=None) -> PetriNet:
         for (event, event_prime) in self.exceptions[frozenset([I, N, M])]:
             inc_place_e_prime = self.helper_struct[event_prime]['places']['included']
             pend_place_e_prime = self.helper_struct[event_prime]['places']['pending']
@@ -508,7 +508,7 @@ class ExceptionalCases(object):
             self.helper_struct[event]['transitions'].extend(new_transitions)
         return tapn
 
-    def create_exception_milestone_no_response_exclude_pattern(self, tapn) -> PetriNet:
+    def create_exception_milestone_no_response_exclude_pattern(self, tapn,m=None) -> PetriNet:
         for (event, event_prime) in self.exceptions[frozenset([E, N, M])]:
             inc_place_e_prime = self.helper_struct[event_prime]['places']['included']
             pend_place_e_prime = self.helper_struct[event_prime]['places']['pending']
@@ -550,7 +550,7 @@ class ExceptionalCases(object):
             self.helper_struct[event]['transitions'].extend(new_transitions)
         return tapn
 
-    def create_exception_milestone_response_include_pattern(self, tapn) -> PetriNet:
+    def create_exception_milestone_response_include_pattern(self, tapn,m=None) -> PetriNet:
         for (event, event_prime) in self.exceptions[frozenset([I, R, M])]:
             inc_place_e_prime = self.helper_struct[event_prime]['places']['included']
             pend_place_e_prime = self.helper_struct[event_prime]['places']['pending']
@@ -602,7 +602,7 @@ class ExceptionalCases(object):
             self.helper_struct[event]['transitions'].extend(new_transitions)
         return tapn
 
-    def create_exception_milestone_response_exclude_pattern(self, tapn) -> PetriNet:
+    def create_exception_milestone_response_exclude_pattern(self, tapn,m=None) -> PetriNet:
         for (event, event_prime) in self.exceptions[frozenset([E, R, M])]:
             inc_place_e_prime = self.helper_struct[event_prime]['places']['included']
             pend_place_e_prime = self.helper_struct[event_prime]['places']['pending']
@@ -651,7 +651,7 @@ class ExceptionalCases(object):
             self.helper_struct[event]['transitions'].extend(new_transitions)
         return tapn
 
-    def create_exception_condition_no_response_include_pattern(self, tapn) -> PetriNet:
+    def create_exception_condition_no_response_include_pattern(self, tapn,m=None) -> PetriNet:
         for (event, event_prime) in self.exceptions[frozenset([N, C, I])]:
             inc_place_e_prime = self.helper_struct[event_prime]['places']['included']
             pend_place_e_prime = self.helper_struct[event_prime]['places']['pending']
@@ -727,7 +727,7 @@ class ExceptionalCases(object):
             self.helper_struct[event]['transitions'].extend(new_transitions)
         return tapn
 
-    def create_exception_condition_no_response_exclude_pattern(self, tapn) -> PetriNet:
+    def create_exception_condition_no_response_exclude_pattern(self, tapn,m=None) -> PetriNet:
         for (event, event_prime) in self.exceptions[frozenset([N, C, E])]:
             inc_place_e_prime = self.helper_struct[event_prime]['places']['included']
             pend_place_e_prime = self.helper_struct[event_prime]['places']['pending']
@@ -799,7 +799,7 @@ class ExceptionalCases(object):
             self.helper_struct[event]['transitions'].extend(new_transitions)
         return tapn
 
-    def create_exception_condition_response_include_pattern(self, tapn) -> PetriNet:
+    def create_exception_condition_response_include_pattern(self, tapn,m=None) -> PetriNet:
         for (event, event_prime) in self.exceptions[frozenset([I, R, C])]:
             inc_place_e_prime = self.helper_struct[event_prime]['places']['included']
             exec_place_e_prime = self.helper_struct[event_prime]['places']['executed']
@@ -881,7 +881,7 @@ class ExceptionalCases(object):
             self.helper_struct[event]['transitions'].extend(new_transitions)
         return tapn
 
-    def create_exception_condition_response_exclude_pattern(self, tapn) -> PetriNet:
+    def create_exception_condition_response_exclude_pattern(self, tapn,m=None) -> PetriNet:
         for (event, event_prime) in self.exceptions[frozenset([E, R, C])]:
             inc_place_e_prime = self.helper_struct[event_prime]['places']['included']
             exec_place_e_prime = self.helper_struct[event_prime]['places']['executed']
@@ -956,7 +956,7 @@ class ExceptionalCases(object):
             self.helper_struct[event]['transitions'].extend(new_transitions)
         return tapn
 
-    def create_exception_condition_include_pattern(self, tapn) -> PetriNet:
+    def create_exception_condition_include_pattern(self, tapn,m=None) -> PetriNet:
         for (event, event_prime) in self.exceptions[frozenset([I, C])]:
             inc_place_e_prime = self.helper_struct[event_prime]['places']['included']
             exec_place_e_prime = self.helper_struct[event_prime]['places']['executed']
@@ -1017,7 +1017,7 @@ class ExceptionalCases(object):
             self.helper_struct[event]['transitions'].extend(new_transitions)
         return tapn
 
-    def create_exception_condition_exclude_pattern(self, tapn) -> PetriNet:
+    def create_exception_condition_exclude_pattern(self, tapn,m=None) -> PetriNet:
         for (event, event_prime) in self.exceptions[frozenset([E, C])]:
             inc_place_e_prime = self.helper_struct[event_prime]['places']['included']
             exec_place_e_prime = self.helper_struct[event_prime]['places']['executed']
@@ -1078,7 +1078,7 @@ class ExceptionalCases(object):
             self.helper_struct[event]['transitions'].extend(new_transitions)
         return tapn
 
-    def create_exception_condition_response_pattern(self, tapn) -> PetriNet:
+    def create_exception_condition_response_pattern(self, tapn,m=None) -> PetriNet:
         for (event, event_prime) in self.exceptions[frozenset([R, C])]:
             inc_place_e_prime = self.helper_struct[event_prime]['places']['included']
             exec_place_e_prime = self.helper_struct[event_prime]['places']['executed']
@@ -1159,7 +1159,7 @@ class ExceptionalCases(object):
             self.helper_struct[event]['transitions'].extend(new_transitions)
         return tapn
 
-    def create_exception_response_include_pattern(self, tapn) -> PetriNet:
+    def create_exception_response_include_pattern(self, tapn,m=None) -> PetriNet:
         for (event, event_prime) in self.exceptions[frozenset([I, R])]:
             inc_place_e_prime = self.helper_struct[event_prime]['places']['included']
             pend_place_e_prime = self.helper_struct[event_prime]['places']['pending']
@@ -1170,56 +1170,60 @@ class ExceptionalCases(object):
             new_transitions = []
 
             # copy 1
-            for delta in range(len_delta):
-                tapn, ts = util.create_event_pattern_transitions_and_arcs(tapn, event,self.helper_struct,self)
-                new_transitions.extend(ts)
-                for t in ts:
-                    tapn, t = util.map_existing_transitions_of_copy_0(delta, copy_0, t, tapn)
+            if pend_place_e_prime:
+                for delta in range(len_delta):
+                    tapn, ts = util.create_event_pattern_transitions_and_arcs(tapn, event,self.helper_struct,self)
+                    new_transitions.extend(ts)
+                    for t in ts:
+                        tapn, t = util.map_existing_transitions_of_copy_0(delta, copy_0, t, tapn)
+                        pn_utils.add_arc_from_to(t, inc_place_e_prime, tapn)
+                        pn_utils.add_arc_from_to(inc_place_e_prime, t, tapn)
+
+                        pn_utils.add_arc_from_to(t, pend_place_e_prime, tapn)
+                        pn_utils.add_arc_from_to(pend_place_e_prime, t, tapn)
+            # copy 2
+            if inc_place_e_prime and pend_place_e_prime:
+                for delta in range(len_delta):
+                    tapn, ts = util.create_event_pattern_transitions_and_arcs(tapn, event,self.helper_struct,self)
+                    new_transitions.extend(ts)
+                    for t in ts:
+                        tapn, t = util.map_existing_transitions_of_copy_0(delta, copy_0, t, tapn)
+                        pn_utils.add_arc_from_to(inc_place_e_prime, t, tapn, type='inhibitor')
+
+                        pn_utils.add_arc_from_to(t, inc_place_e_prime, tapn)
+
+                        pn_utils.add_arc_from_to(t, pend_place_e_prime, tapn)
+                        pn_utils.add_arc_from_to(pend_place_e_prime, t, tapn, type='inhibitor')
+
+                        pn_utils.add_arc_from_to(pend_excl_place_e_prime, t, tapn, type='inhibitor')
+
+            # copy 3
+            if pend_excl_place_e_prime:
+                for delta in range(len_delta):
+                    tapn, ts = util.create_event_pattern_transitions_and_arcs(tapn, event,self.helper_struct,self)
+                    new_transitions.extend(ts)
+                    for t in ts:
+                        tapn, t = util.map_existing_transitions_of_copy_0(delta, copy_0, t, tapn)
+                        pn_utils.add_arc_from_to(inc_place_e_prime, t, tapn, type='inhibitor')
+
+                        pn_utils.add_arc_from_to(t, inc_place_e_prime, tapn)
+
+                        pn_utils.add_arc_from_to(t, pend_place_e_prime, tapn)
+                        pn_utils.add_arc_from_to(pend_excl_place_e_prime, t, tapn)
+
+            # copy 0
+            if pend_place_e_prime:
+                for t in copy_0:
                     pn_utils.add_arc_from_to(t, inc_place_e_prime, tapn)
                     pn_utils.add_arc_from_to(inc_place_e_prime, t, tapn)
 
                     pn_utils.add_arc_from_to(t, pend_place_e_prime, tapn)
-                    pn_utils.add_arc_from_to(pend_place_e_prime, t, tapn)
-            # copy 2
-            for delta in range(len_delta):
-                tapn, ts = util.create_event_pattern_transitions_and_arcs(tapn, event,self.helper_struct,self)
-                new_transitions.extend(ts)
-                for t in ts:
-                    tapn, t = util.map_existing_transitions_of_copy_0(delta, copy_0, t, tapn)
-                    pn_utils.add_arc_from_to(inc_place_e_prime, t, tapn, type='inhibitor')
-
-                    pn_utils.add_arc_from_to(t, inc_place_e_prime, tapn)
-
-                    pn_utils.add_arc_from_to(t, pend_place_e_prime, tapn)
                     pn_utils.add_arc_from_to(pend_place_e_prime, t, tapn, type='inhibitor')
-
-                    pn_utils.add_arc_from_to(pend_excl_place_e_prime, t, tapn, type='inhibitor')
-
-            # copy 3
-            for delta in range(len_delta):
-                tapn, ts = util.create_event_pattern_transitions_and_arcs(tapn, event,self.helper_struct,self)
-                new_transitions.extend(ts)
-                for t in ts:
-                    tapn, t = util.map_existing_transitions_of_copy_0(delta, copy_0, t, tapn)
-                    pn_utils.add_arc_from_to(inc_place_e_prime, t, tapn, type='inhibitor')
-
-                    pn_utils.add_arc_from_to(t, inc_place_e_prime, tapn)
-
-                    pn_utils.add_arc_from_to(t, pend_place_e_prime, tapn)
-                    pn_utils.add_arc_from_to(pend_excl_place_e_prime, t, tapn)
-
-            # copy 0
-            for t in copy_0:
-                pn_utils.add_arc_from_to(t, inc_place_e_prime, tapn)
-                pn_utils.add_arc_from_to(inc_place_e_prime, t, tapn)
-
-                pn_utils.add_arc_from_to(t, pend_place_e_prime, tapn)
-                pn_utils.add_arc_from_to(pend_place_e_prime, t, tapn, type='inhibitor')
 
             self.helper_struct[event]['transitions'].extend(new_transitions)
         return tapn
 
-    def create_exception_response_exclude_pattern(self, tapn) -> PetriNet:
+    def create_exception_response_exclude_pattern(self, tapn, m=None) -> PetriNet:
         for (event, event_prime) in self.exceptions[frozenset([E, R])]:
             inc_place_e_prime = self.helper_struct[event_prime]['places']['included']
             pend_place_e_prime = self.helper_struct[event_prime]['places']['pending']
@@ -1229,50 +1233,54 @@ class ExceptionalCases(object):
             len_delta = int(len_copy_0 / len(self.helper_struct[event]['t_types']))
             new_transitions = []
             # copy 1
-            for delta in range(len_delta):
-                tapn, ts = util.create_event_pattern_transitions_and_arcs(tapn, event,self.helper_struct,self)
-                new_transitions.extend(ts)
-                for t in ts:
-                    tapn, t = util.map_existing_transitions_of_copy_0(delta, copy_0, t, tapn)
-                    pn_utils.add_arc_from_to(inc_place_e_prime, t, tapn)
+            if pend_place_e_prime:
+                for delta in range(len_delta):
+                    tapn, ts = util.create_event_pattern_transitions_and_arcs(tapn, event, self.helper_struct, self)
+                    new_transitions.extend(ts)
+                    for t in ts:
+                        tapn, t = util.map_existing_transitions_of_copy_0(delta, copy_0, t, tapn)
+                        pn_utils.add_arc_from_to(inc_place_e_prime, t, tapn)
 
-                    pn_utils.add_arc_from_to(pend_place_e_prime, t, tapn)
+                        pn_utils.add_arc_from_to(pend_place_e_prime, t, tapn)
 
-                    pn_utils.add_arc_from_to(t, pend_excl_place_e_prime, tapn)
+                        pn_utils.add_arc_from_to(t, pend_excl_place_e_prime, tapn)
             # copy 2
-            for delta in range(len_delta):
-                tapn, ts = util.create_event_pattern_transitions_and_arcs(tapn, event,self.helper_struct,self)
-                new_transitions.extend(ts)
-                for t in ts:
-                    tapn, t = util.map_existing_transitions_of_copy_0(delta, copy_0, t, tapn)
-                    pn_utils.add_arc_from_to(inc_place_e_prime, t, tapn, type='inhibitor')
+            if pend_excl_place_e_prime:
+                for delta in range(len_delta):
+                    tapn, ts = util.create_event_pattern_transitions_and_arcs(tapn, event,self.helper_struct,self)
+                    new_transitions.extend(ts)
+                    for t in ts:
+                        tapn, t = util.map_existing_transitions_of_copy_0(delta, copy_0, t, tapn)
+                        pn_utils.add_arc_from_to(inc_place_e_prime, t, tapn, type='inhibitor')
 
-                    pn_utils.add_arc_from_to(t, pend_excl_place_e_prime, tapn)
-                    pn_utils.add_arc_from_to(pend_excl_place_e_prime, t, tapn, type='inhibitor')
+                        pn_utils.add_arc_from_to(t, pend_excl_place_e_prime, tapn)
+                        pn_utils.add_arc_from_to(pend_excl_place_e_prime, t, tapn, type='inhibitor')
 
             # copy 3
-            for delta in range(len_delta):
-                tapn, ts = util.create_event_pattern_transitions_and_arcs(tapn, event,self.helper_struct,self)
-                new_transitions.extend(ts)
-                for t in ts:
-                    tapn, t = util.map_existing_transitions_of_copy_0(delta, copy_0, t, tapn)
-                    pn_utils.add_arc_from_to(inc_place_e_prime, t, tapn, type='inhibitor')
+            if pend_excl_place_e_prime:
+                for delta in range(len_delta):
+                    tapn, ts = util.create_event_pattern_transitions_and_arcs(tapn, event, self.helper_struct, self)
+                    new_transitions.extend(ts)
+                    for t in ts:
+                        tapn, t = util.map_existing_transitions_of_copy_0(delta, copy_0, t, tapn)
+                        pn_utils.add_arc_from_to(inc_place_e_prime, t, tapn, type='inhibitor')
 
-                    pn_utils.add_arc_from_to(t, pend_excl_place_e_prime, tapn)
-                    pn_utils.add_arc_from_to(pend_excl_place_e_prime, t, tapn)
+                        pn_utils.add_arc_from_to(t, pend_excl_place_e_prime, tapn)
+                        pn_utils.add_arc_from_to(pend_excl_place_e_prime, t, tapn)
 
             # copy 0
-            for t in copy_0:
-                pn_utils.add_arc_from_to(inc_place_e_prime, t, tapn)
+            if inc_place_e_prime or pend_place_e_prime:
+                for t in copy_0:
+                    pn_utils.add_arc_from_to(inc_place_e_prime, t, tapn)
 
-                pn_utils.add_arc_from_to(pend_place_e_prime, t, tapn, type='inhibitor')
+                    pn_utils.add_arc_from_to(pend_place_e_prime, t, tapn, type='inhibitor')
 
-                pn_utils.add_arc_from_to(t, pend_excl_place_e_prime, tapn)
+                    pn_utils.add_arc_from_to(t, pend_excl_place_e_prime, tapn)
 
             self.helper_struct[event]['transitions'].extend(new_transitions)
         return tapn
 
-    def create_exception_condition_no_response_pattern(self, tapn) -> PetriNet:
+    def create_exception_condition_no_response_pattern(self, tapn,m=None) -> PetriNet:
         for (event, event_prime) in self.exceptions[frozenset([N, C])]:
             inc_place_e_prime = self.helper_struct[event_prime]['places']['included']
             pend_place_e_prime = self.helper_struct[event_prime]['places']['pending']
@@ -1346,7 +1354,7 @@ class ExceptionalCases(object):
             self.helper_struct[event]['transitions'].extend(new_transitions)
         return tapn
 
-    def create_exception_no_response_exclude_pattern(self, tapn) -> PetriNet:
+    def create_exception_no_response_exclude_pattern(self, tapn,m=None) -> PetriNet:
         for (event, event_prime) in self.exceptions[frozenset([E, N])]:
             inc_place_e_prime = self.helper_struct[event_prime]['places']['included']
             pend_place_e_prime = self.helper_struct[event_prime]['places']['pending']
@@ -1398,7 +1406,7 @@ class ExceptionalCases(object):
             self.helper_struct[event]['transitions'].extend(new_transitions)
         return tapn
 
-    def create_exception_no_response_include_pattern(self, tapn) -> PetriNet:
+    def create_exception_no_response_include_pattern(self, tapn,m=None) -> PetriNet:
         for (event, event_prime) in self.exceptions[frozenset([I, N])]:
             inc_place_e_prime = self.helper_struct[event_prime]['places']['included']
             pend_place_e_prime = self.helper_struct[event_prime]['places']['pending']
@@ -1454,7 +1462,7 @@ class ExceptionalCases(object):
             self.helper_struct[event]['transitions'].extend(new_transitions)
         return tapn
 
-    def create_exception_milestone_no_response_pattern(self, tapn) -> PetriNet:
+    def create_exception_milestone_no_response_pattern(self, tapn,m=None) -> PetriNet:
         for (event, event_prime) in self.exceptions[frozenset([N, M])]:
             inc_place_e_prime = self.helper_struct[event_prime]['places']['included']
             pend_place_e_prime = self.helper_struct[event_prime]['places']['pending']
@@ -1497,7 +1505,7 @@ class ExceptionalCases(object):
             self.helper_struct[event]['transitions'].extend(new_transitions)
         return tapn
 
-    def create_exception_condition_milestone_pattern(self, tapn) -> PetriNet:
+    def create_exception_condition_milestone_pattern(self, tapn,m=None) -> PetriNet:
         for (event, event_prime) in self.exceptions[frozenset([C, M])]:
             inc_place_e_prime = self.helper_struct[event_prime]['places']['included']
             exec_place_e_prime = self.helper_struct[event_prime]['places']['executed']
@@ -1530,7 +1538,7 @@ class ExceptionalCases(object):
             self.helper_struct[event]['transitions'].extend(new_transitions)
         return tapn
 
-    def create_exception_milestone_exclude_pattern(self, tapn) -> PetriNet:
+    def create_exception_milestone_exclude_pattern(self, tapn,m=None) -> PetriNet:
         for (event, event_prime) in self.exceptions[frozenset([E, M])]:
             inc_place_e_prime = self.helper_struct[event_prime]['places']['included']
             pend_place_e_prime = self.helper_struct[event_prime]['places']['pending']
@@ -1575,7 +1583,7 @@ class ExceptionalCases(object):
             self.helper_struct[event]['transitions'].extend(new_transitions)
         return tapn
 
-    def create_exception_milestone_include_pattern(self, tapn) -> PetriNet:
+    def create_exception_milestone_include_pattern(self, tapn,m=None) -> PetriNet:
         for (event, event_prime) in self.exceptions[frozenset([I, M])]:
             inc_place_e_prime = self.helper_struct[event_prime]['places']['included']
             pend_place_e_prime = self.helper_struct[event_prime]['places']['pending']
@@ -1619,7 +1627,7 @@ class ExceptionalCases(object):
             self.helper_struct[event]['transitions'].extend(new_transitions)
         return tapn
 
-    def create_exception_milestone_response_pattern(self, tapn) -> PetriNet:
+    def create_exception_milestone_response_pattern(self, tapn,m=None) -> PetriNet:
         for (event, event_prime) in self.exceptions[frozenset([R, M])]:
             inc_place_e_prime = self.helper_struct[event_prime]['places']['included']
             pend_place_e_prime = self.helper_struct[event_prime]['places']['pending']

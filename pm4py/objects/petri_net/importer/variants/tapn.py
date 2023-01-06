@@ -142,58 +142,58 @@ def import_net_from_xml_object(root, parameters=None):
     marking = Marking()
     fmarking = Marking()
 
-    nett = None
-    page = None
-    finalmarkings = None
-    variables = None
+    nett = root[0]
+    # page = None
+    # finalmarkings = None
+    # variables = None
 
     stochastic_information = {}
 
-    for child in root:
-        nett = child
+    # for child in root:
+    #     nett = child
 
     places_dict = {}
     trans_dict = {}
 
-    if nett is not None:
-        for child in nett:
-            if "page" in child.tag:
-                page = child
-            if "finalmarkings" in child.tag:
-                finalmarkings = child
-            if "variables" in child.tag:
-                variables = child
-
-    if page is None:
-        page = nett
+    # if nett is not None:
+    #     for child in nett:
+    #         if "page" in child.tag:
+    #             page = child
+    #         if "finalmarkings" in child.tag:
+    #             finalmarkings = child
+    #         if "variables" in child.tag:
+    #             variables = child
+    #
+    # if page is None:
+    page = nett
 
     if page is not None:
         for child in page:
-            if "place" in child.tag:
+            if child.tag.endswith("place"):
                 position_X = None
                 position_Y = None
                 dimension_X = None
                 dimension_Y = None
                 place_id = child.get("id")
-                place_name = place_id
-                number = 0
-                for child2 in child:
-                    if child2.tag.endswith('name'):
-                        for child3 in child2:
-                            if child3.text:
-                                place_name = child3.text
-                    if child2.tag.endswith('initialMarking'):
-                        for child3 in child2:
-                            if child3.tag.endswith("text"):
-                                number = int(child3.text)
-                    if child2.tag.endswith('graphics'):
-                        for child3 in child2:
-                            if child3.tag.endswith('position'):
-                                position_X = float(child3.get("x"))
-                                position_Y = float(child3.get("y"))
-                            elif child3.tag.endswith("dimension"):
-                                dimension_X = float(child3.get("x"))
-                                dimension_Y = float(child3.get("y"))
+                place_name = child.get("name")
+                number = int(child.get("initialMarking"))
+                # for child2 in child:
+                #     if child2.tag.endswith('name'):
+                #         for child3 in child2:
+                #             if child3.text:
+                #                 place_name = child3.text
+                #     if child2.tag.endswith('initialMarking'):
+                #         for child3 in child2:
+                #             if child3.tag.endswith("text"):
+                #                 number = int(child3.text)
+                #     if child2.tag.endswith('graphics'):
+                #         for child3 in child2:
+                #             if child3.tag.endswith('position'):
+                #                 position_X = float(child3.get("x"))
+                #                 position_Y = float(child3.get("y"))
+                #             elif child3.tag.endswith("dimension"):
+                #                 dimension_X = float(child3.get("x"))
+                #                 dimension_Y = float(child3.get("y"))
                 places_dict[place_id] = PetriNet.Place(place_id)
                 places_dict[place_id].properties[constants.PLACE_NAME_TAG] = place_name
                 net.places.add(places_dict[place_id])
@@ -204,8 +204,6 @@ def import_net_from_xml_object(root, parameters=None):
                     marking[places_dict[place_id]] = number
                 del place_name
 
-    if page is not None:
-        for child in page:
             if child.tag.endswith("transition"):
                 position_X = None
                 position_Y = None
@@ -294,56 +292,54 @@ def import_net_from_xml_object(root, parameters=None):
                     trans_dict[trans_id].properties[constants.LAYOUT_INFORMATION_PETRI] = (
                         (position_X, position_Y), (dimension_X, dimension_Y))
 
-    if page is not None:
-        for child in page:
             if child.tag.endswith("arc"):
                 arc_source = child.get("source")
                 arc_target = child.get("target")
-                arc_weight = 1
-                arc_type = None
+                arc_weight = int(child.get("weight"))
+                arc_type = child.get("type")
                 arc_properties = {}
 
-                for arc_child in child:
-                    if arc_child.tag.endswith("inscription"):
-                        for text_element in arc_child:
-                            if text_element.tag.endswith("text"):
-                                arc_weight = int(text_element.text)
-                    elif arc_child.tag.endswith(petri_properties.ARCTYPE):
-                        for text_element in arc_child:
-                            if text_element.tag.endswith("text"):
-                                arc_type = text_element.text
+                # for arc_child in child:
+                #     if arc_child.tag.endswith("inscription"):
+                #         for text_element in arc_child:
+                #             if text_element.tag.endswith("text"):
+                #                 arc_weight = int(text_element.text)
+                #     elif arc_child.tag.endswith(petri_properties.ARCTYPE):
+                #         for text_element in arc_child:
+                #             if text_element.tag.endswith("text"):
+                #                 arc_type = text_element.text
 
                 if arc_source in places_dict and arc_target in trans_dict:
                     a = add_arc_from_to(places_dict[arc_source], trans_dict[arc_target], net, weight=arc_weight, type=arc_type)
-                    for prop in arc_properties:
-                        a.properties[prop] = arc_properties[prop]
+                    # for prop in arc_properties:
+                    #     a.properties[prop] = arc_properties[prop]
                 elif arc_target in places_dict and arc_source in trans_dict:
                     a = add_arc_from_to(trans_dict[arc_source], places_dict[arc_target], net, weight=arc_weight, type=arc_type)
-                    for prop in arc_properties:
-                        a.properties[prop] = arc_properties[prop]
+                    # for prop in arc_properties:
+                    #     a.properties[prop] = arc_properties[prop]
 
-    if finalmarkings is not None:
-        for child in finalmarkings:
-            for child2 in child:
-                place_id = child2.get("idref")
-                for child3 in child2:
-                    if child3.tag.endswith("text"):
-                        number = int(child3.text)
-                        if number > 0:
-                            fmarking[places_dict[place_id]] = number
-
-    if variables is not None:
-        net.properties[petri_properties.VARIABLES] = []
-        for child in variables:
-            variable_type = child.get("type")
-            variable_name = ""
-            for child2 in child:
-                if child2.tag.endswith("name"):
-                    variable_name = child2.text
-            net.properties[petri_properties.VARIABLES].append({"type": variable_type, "name": variable_name})
+    # if finalmarkings is not None:
+    #     for child in finalmarkings:
+    #         for child2 in child:
+    #             place_id = child2.get("idref")
+    #             for child3 in child2:
+    #                 if child3.tag.endswith("text"):
+    #                     number = int(child3.text)
+    #                     if number > 0:
+    #                         fmarking[places_dict[place_id]] = number
+    #
+    # if variables is not None:
+    #     net.properties[petri_properties.VARIABLES] = []
+    #     for child in variables:
+    #         variable_type = child.get("type")
+    #         variable_name = ""
+    #         for child2 in child:
+    #             if child2.tag.endswith("name"):
+    #                 variable_name = child2.text
+    #         net.properties[petri_properties.VARIABLES].append({"type": variable_type, "name": variable_name})
 
     # generate the final marking in the case has not been found
-    if len(fmarking) == 0:
-        fmarking = final_marking.discover_final_marking(net)
+    # if len(fmarking) == 0:
+    #     fmarking = final_marking.discover_final_marking(net)
 
     return net, marking, fmarking

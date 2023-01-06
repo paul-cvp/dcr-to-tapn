@@ -31,7 +31,7 @@ from pm4py.utils import get_properties
 
 
 def view_petri_net(petri_net: PetriNet, initial_marking: Optional[Marking] = None,
-                   final_marking: Optional[Marking] = None, format: str = "png"):
+                   final_marking: Optional[Marking] = None, format: str = "png", bgcolor : str = "transparent"):
     """
     Views a (composite) Petri net
 
@@ -47,8 +47,10 @@ def view_petri_net(petri_net: PetriNet, initial_marking: Optional[Marking] = Non
         Format of the output picture (default: png)
     """
     from pm4py.visualization.petri_net import visualizer as pn_visualizer
+    parameters = {pn_visualizer.Variants.WO_DECORATION.value.Parameters.FORMAT: format,
+                  "bgcolor": bgcolor}
     gviz = pn_visualizer.apply(petri_net, initial_marking, final_marking,
-                               parameters={pn_visualizer.Variants.WO_DECORATION.value.Parameters.FORMAT: format})
+                               parameters=parameters)
     pn_visualizer.view(gviz)
 
 

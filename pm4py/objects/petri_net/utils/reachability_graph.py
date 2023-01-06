@@ -67,7 +67,7 @@ def marking_flow_petri(net, im, return_eventually_enabled=False, parameters=None
     # set a maximum execution time of 1 day (it can be changed by providing the parameter)
     max_exec_time = exec_utils.get_param_value(Parameters.MAX_ELAB_TIME, parameters, 86400)
     semantics = exec_utils.get_param_value(Parameters.PETRI_SEMANTICS, parameters, petri_net.semantics.ClassicSemantics())
-    print(f'[i] exec: {max_exec_time} semantics: {semantics}')
+    # print(f'[i] exec: {max_exec_time} semantics: {semantics}')
     start_time = time.time()
 
     incoming_transitions = {im: set()}

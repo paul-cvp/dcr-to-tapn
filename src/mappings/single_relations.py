@@ -20,7 +20,7 @@ class SingleRelations(object):
         new_transitions = []
 
         # copy 1
-        if inc_place_e_prime and pend_place_e_prime and pend_excl_place_e_prime:
+        if inc_place_e_prime:
             for delta in range(len_delta):
                 tapn, ts = util.create_event_pattern_transitions_and_arcs(tapn, event, self.helper_struct, self.mapping_exceptions)
                 new_transitions.extend(ts)
@@ -32,7 +32,7 @@ class SingleRelations(object):
                     pn_utils.add_arc_from_to(t, pend_place_e_prime, tapn)
                     pn_utils.add_arc_from_to(pend_excl_place_e_prime, t, tapn)
         # copy 2
-        if inc_place_e_prime:
+        if inc_place_e_prime and pend_place_e_prime and pend_excl_place_e_prime:
             for delta in range(len_delta):
                 tapn, ts = util.create_event_pattern_transitions_and_arcs(tapn, event, self.helper_struct, self.mapping_exceptions)
                 new_transitions.extend(ts)

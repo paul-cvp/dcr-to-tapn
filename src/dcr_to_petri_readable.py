@@ -82,11 +82,12 @@ class Dcr2PetriTransport(object):
             # fill the marking
             if event in G['marking']['executed']:
                 m[exec_place] = 1
-        event_in_self = False
-        for k,v in self.mapping_exceptions.self_exceptions.items():
-            if event in v:
-                event_in_self = True
-        if self.preoptimize and not event_in_self:
+        # TODO: Figure out why I put something about event_in_self here
+        # event_in_self = False
+        # for k, v in self.mapping_exceptions.self_exceptions.items():
+        #     if event in v:
+        #         event_in_self = True
+        if self.preoptimize:# and not event_in_self:
             ts = ['event']
             if default_make_exec and not event in G['marking']['executed'] and not event in self.preoptimizer.no_init_t:
                 ts.append('init')
@@ -106,13 +107,13 @@ class Dcr2PetriTransport(object):
 
     def post_optimize_petri_net_reachability_graph(self, tapn, m) -> PetriNet:
         from pm4py.objects.petri_net.utils import reachability_graph
-        # from pm4py.visualization.transition_system import visualizer as ts_visualizer
+        #from pm4py.visualization.transition_system import visualizer as ts_visualizer
         from pm4py.objects.petri_net.transport_invariant import semantics as tapn_semantics
 
         trans_sys = reachability_graph.construct_reachability_graph(tapn, m, use_trans_name=True,
-                                                                    parameters={'petri_semantics': tapn_semantics.TransportInvariantSemantics()})
-        # ,'max_elab_time': 2*60})
-        # gviz = ts_visualizer.apply(ts, parameters={ts_visualizer.Variants.VIEW_BASED.value.Parameters.FORMAT: "svg"})
+                                                                    parameters={'petri_semantics': tapn_semantics.TransportInvariantSemantics()
+        ,'max_elab_time': 2*60*60})
+        # gviz = ts_visualizer.apply(trans_sys, parameters={ts_visualizer.Variants.VIEW_BASED.value.Parameters.FORMAT: "svg"})
         # ts_visualizer.view(gviz)
         fired_transitions = set()
 
@@ -237,7 +238,7 @@ class Dcr2PetriTransport(object):
     #     return tapn, m
 
     def dcr2tapn(self, G, tapn_path) -> (PetriNet, Marking):
-        self.basic = False  # True (basic) = inc,ex,resp,cond | False = basic + no-resp,mil
+        self.basic = True  # True (basic) = inc,ex,resp,cond | False = basic + no-resp,mil
         self.timed = False  # False = untimed | True = timed cond (delay) and resp (deadline)
         self.print_steps = False
         self.initialize_helper_struct(G)
@@ -246,13 +247,13 @@ class Dcr2PetriTransport(object):
         # pre-optimize mapping based on DCR graph behaviour
         if self.preoptimize:
             self.preoptimizer.pre_optimize_based_on_dcr_behaviour(G)
-        if not self.map_unexecutable_events:
-            G = self.preoptimizer.remove_un_executable_events_from_dcr(G)
+            if not self.map_unexecutable_events:
+                G = self.preoptimizer.remove_un_executable_events_from_dcr(G)
 
         # including the handling of exception cases from the induction step
         G = self.mapping_exceptions.filter_exceptional_cases(G)
-
-        self.preoptimizer.preoptimize_based_on_exceptional_cases(G, self.mapping_exceptions)
+        if self.preoptimize:
+            self.preoptimizer.preoptimize_based_on_exceptional_cases(G, self.mapping_exceptions)
 
         # map events
         for event in G['events']:
@@ -290,7 +291,7 @@ class Dcr2PetriTransport(object):
         # handle all relation exceptions
         if self.print_steps:
             print('[i] handle all relation exceptions')
-        tapn = self.mapping_exceptions.map_exceptional_cases_between_events(tapn)
+        tapn = self.mapping_exceptions.map_exceptional_cases_between_events(tapn, m)
         # post-optimize based on the petri net reachability graph
         if self.postoptimize:
             if self.print_steps:
@@ -299,8 +300,8 @@ class Dcr2PetriTransport(object):
 
 
         if self.print_steps:
-            print('[i] export')
-        pnml_exporter.apply(tapn, m, tapn_path, variant=pnml_exporter.TAPN)
+            print(f'[i] export to {tapn_path}')
+        pnml_exporter.apply(tapn, m, tapn_path, variant=pnml_exporter.TAPN, parameters={'isTimed': self.timed})
 
         # post-optimize based on tapaal simulation
         # if self.postoptimize:
@@ -420,23 +421,39 @@ def run_specific_dcr():
     here you can write your own graph and run it
     '''
     dcr = {
-        'events': {'A', 'B', 'C'},
-        'conditionsFor': {'A': {'B'}},
+        'events': {'A', 'B'},
+        'conditionsFor': {'B': {'A'}},
         'milestonesFor': {},
-        'responseTo': {'C': {'B'}, 'A': {'B'}},
+        'responseTo': {'A': {'B'}},
         'noResponseTo': {},
-        'includesTo': {'A': {'B', 'C'}},
-        'excludesTo': {'B': {'C'}},
-        'conditionsForDelays': {'A': {'B': 2}},
-        'responseToDeadlines': {'C': {'B': 5}, 'A': {'B': 7}},
+        'includesTo': {},
+        'excludesTo': {'B': {'A','B'}},
+        # 'conditionsForDelays': {'A': {'B': 2}},
+        # 'responseToDeadlines': {'C': {'B': 5}, 'A': {'B': 7}},
         'marking': {'executed': set(),
-                    'included': {'A'},
+                    'included': {'A', 'B'},
                     'pending': set()
                     }
     }
-    d2p = Dcr2PetriTransport(preoptimize=True, postoptimize=True, map_unexecutable_events=False)
+    # dcr = {
+    #     'events': {'A', 'B'},
+    #     'conditionsFor': {},
+    #     'milestonesFor': {},
+    #     'responseTo': {'A': {'B'}},
+    #     'noResponseTo': {},
+    #     'includesTo': {},
+    #     'excludesTo': {'A': {'B'}},
+    #     # 'conditionsForDelays': {'A': {'B': 2}},
+    #     # 'responseToDeadlines': {'C': {'B': 5}, 'A': {'B': 7}},
+    #     'marking': {'executed': set(),
+    #                 'included': {'A', 'B'},
+    #                 'pending': set()
+    #                 }
+    # }
+
+    d2p = Dcr2PetriTransport(preoptimize=False, postoptimize=True, map_unexecutable_events=False)
     print('[i] dcr')
-    tapn, m = d2p.dcr2tapn(dcr, tapn_path="../models/petri.tapn")
+    tapn, m = d2p.dcr2tapn(dcr, tapn_path="../models/one_petri.tapn")
 
 def run_dcrxml_files():
     '''
@@ -449,29 +466,34 @@ def run_dcrxml_files():
     Remember to create the models folder at the same level as the src folder and inside the models folder create the dcrxml folder
     '''
     dcrxml_tapn_files = [
-                        ['test_specific_mapping.xml', 'test_specific_mapping_unoptimized.tapn', True, False, False], # i=0
-                         ['test_specific_mapping.xml', 'test_specific_mapping.tapn', True, True, False], #i=1 etc.
+                         ['test_specific_mapping.xml', 'test_specific_mapping_unoptimized.tapn', True, False, False], # i=0
+                         ['test_specific_mapping.xml', 'test_specific_mapping.tapn', False, True, True], #i=1 etc.
                          ['DCR_Indicators_220810_Fix2.xml', 'dcr_indicators_fix2_unoptimized.tapn', True, False, False],
-                         ['DCR_Indicators_220810_Fix2.xml', 'dcr_indicators_fix2.tapn', True, True, False],
-                         ['DCR_Indicators_220906_Fulllog.xml', 'dcr_indicators_full_unoptimized.tapn', True, False, False],
+                         ['DCR_Indicators_220810_Fix2.xml', 'dcr_indicators_fix2.tapn', False, True, True],
+                         ['DCR_Indicators_220906_Fulllog.xml', 'dcr_indicators_full.tapn', False, True, True],
                          ['Road Traffic Fine.xml', 'road_traffic_fine_unoptimized.tapn', True, False, False],
                          ['Expense report example.xml', 'expense_report_unoptimized.tapn', True, False, False],
-                         ['Road Traffic Fine.xml', 'road_traffic_fine.tapn', True, True, False],
-                         ['Expense report example.xml', 'exepense_report.tapn', True, True, False] #i=8
+                         ['Road Traffic Fine.xml', 'road_traffic_fine.tapn', False, True, True],
+                         ['Expense report example.xml', 'expense_report.tapn', False, True, True], #i=8
+                         ['eshop.xml', 'eshop_unoptimized.tapn', False, False, True],
+                         ['eshop.xml', 'eshop_dcr_analysis.tapn', True, False, False],
+                         ['eshop.xml', 'eshop_pn_reachability.tapn', False, True, False],
+                         ['eshop.xml', 'eshop_full_optimization.tapn', True, True, False]
                          ]
     #this runs from i=5 to 8 (so the road traffic fine and expense report optimized and unoptimized conversions
-    for i in range(5, 9):
+    for i in [9,10,11,12]:
         mapping_call = dcrxml_tapn_files[i]
         d2p = Dcr2PetriTransport(preoptimize=mapping_call[2], postoptimize=mapping_call[3], map_unexecutable_events=mapping_call[4])
-        print('[i] import')
-        dcr_indicators_fix2 = dcr_importer.apply(f'../models/dcrxml/{mapping_call[0]}')
-        print('[i] convert')
-        tapn, m = d2p.dcr2tapn(dcr_indicators_fix2, tapn_path=f"../models/{mapping_call[1]}")
+        d2p.print_steps = True
+        print(f'[i] import {mapping_call[0]}')
+        dcr = dcr_importer.apply(f'../models/dcrxml/{mapping_call[0]}')
+        print(f'[i] convert {mapping_call[0]}')
+        tapn, m = d2p.dcr2tapn(dcr, tapn_path=f"../models/{mapping_call[1]}")
 
 
 if __name__ == '__main__':
     # uncomment which one you need and read more in the function about what it does
-    # run_all()  # this is in line 411
-    # run_specific_dcr()  # this is in line 418
-    run_dcrxml_files()  # this is in line 441
+    run_all()  # this is in line 411
+    #run_specific_dcr()  # this is in line 418
+    #run_dcrxml_files()  # this is in line 441
     print('[i] Done!')
