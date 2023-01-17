@@ -446,7 +446,7 @@ def complete_test(dcrs_to_test):
         file_name = k.replace("'", "").replace("(", "").replace(")", "").replace(",", "").replace(" ", "_")
         file_name = file_name + ".tapn"
         res_path = f"../models/all/{file_name}"
-        d2p = Dcr2PetriTransport(postoptimize=False)
+        d2p = Dcr2PetriTransport(postoptimize=True)
         tapn = d2p.dcr2tapn(v, res_path)
         if k_split[1] != past_k:
             # print(f'[i] {k}')
@@ -470,9 +470,9 @@ def run_specific_dcr():
     dcr = {
         'events': {'A', 'B'},
         'conditionsFor': {'B': {'A'}},
-        'milestonesFor': {},
+        # 'milestonesFor': {},
         'responseTo': {'A': {'B'}},
-        'noResponseTo': {},
+        # 'noResponseTo': {},
         'includesTo': {},
         'excludesTo': {'B': {'A', 'B'}},
         # 'conditionsForDelays': {'A': {'B': 2}},
@@ -482,21 +482,6 @@ def run_specific_dcr():
                     'pending': set()
                     }
     }
-    # dcr = {
-    #     'events': {'A', 'B'},
-    #     'conditionsFor': {},
-    #     'milestonesFor': {},
-    #     'responseTo': {'A': {'B'}},
-    #     'noResponseTo': {},
-    #     'includesTo': {},
-    #     'excludesTo': {'A': {'B'}},
-    #     # 'conditionsForDelays': {'A': {'B': 2}},
-    #     # 'responseToDeadlines': {'C': {'B': 5}, 'A': {'B': 7}},
-    #     'marking': {'executed': set(),
-    #                 'included': {'A', 'B'},
-    #                 'pending': set()
-    #                 }
-    # }
 
     d2p = Dcr2PetriTransport(preoptimize=False, postoptimize=True, map_unexecutable_events=False)
     print('[i] dcr')
@@ -513,24 +498,24 @@ def run_dcrxml_files():
 
     Remember to create the models folder at the same level as the src folder and inside the models folder create the dcrxml folder
     '''
-    dcrxml_tapn_files = [
-        ['test_specific_mapping.xml', 'test_specific_mapping_unoptimized.tapn', True, False, False],  # i=0
-        ['test_specific_mapping.xml', 'test_specific_mapping.tapn', False, True, True],  # i=1 etc.
-        ['DCR_Indicators_220810_Fix2.xml', 'dcr_indicators_fix2_unoptimized.tapn', True, False, False],
-        ['DCR_Indicators_220810_Fix2.xml', 'dcr_indicators_fix2.tapn', False, True, True],
-        ['DCR_Indicators_220906_Fulllog.xml', 'dcr_indicators_full.tapn', False, True, True],
-        ['Road Traffic Fine.xml', 'road_traffic_fine_unoptimized.tapn', True, False, False],
-        ['Expense report example.xml', 'expense_report_unoptimized.tapn', True, False, False],
-        ['Road Traffic Fine.xml', 'road_traffic_fine.tapn', False, True, True],
-        ['Expense report example.xml', 'expense_report.tapn', False, True, True],  # i=8
+    dcrxml_files = [
+        # ['test_specific_mapping.xml', 'test_specific_mapping_unoptimized.tapn', True, False, False],  # i=0
+        # ['test_specific_mapping.xml', 'test_specific_mapping.tapn', False, True, True],  # i=1 etc.
+        # ['DCR_Indicators_220810_Fix2.xml', 'dcr_indicators_fix2_unoptimized.tapn', True, False, False],
+        # ['DCR_Indicators_220810_Fix2.xml', 'dcr_indicators_fix2.tapn', False, True, True],
+        # ['DCR_Indicators_220906_Fulllog.xml', 'dcr_indicators_full.tapn', False, True, True],
+        # ['Road Traffic Fine.xml', 'road_traffic_fine_unoptimized.tapn', True, False, False],
+        # ['Expense report example.xml', 'expense_report_unoptimized.tapn', True, False, False],
+        # ['Road Traffic Fine.xml', 'road_traffic_fine.tapn', False, True, True],
+        # ['Expense report example.xml', 'expense_report.tapn', False, True, True],  # i=8
         ['eshop.xml', 'eshop_unoptimized.pnml', False, False, True],
         ['eshop.xml', 'eshop_dcr_analysis.pnml', True, False, False],
         ['eshop.xml', 'eshop_pn_reachability.pnml', False, True, False],
-        ['eshop.xml', 'eshop_full_optimization.pnml', True, True, False]
+        ['eshop.xml', 'eshop_full_optimization.pnml', True, True, False],
     ]
     # this runs from i=5 to 8 (so the road traffic fine and expense report optimized and unoptimized conversions
-    for i in [9, 10, 11, 12]:
-        mapping_call = dcrxml_tapn_files[i]
+    for mapping_call in dcrxml_files:
+        # mapping_call = dcrxml_files[i]
         d2p = Dcr2PetriTransport(preoptimize=mapping_call[2], postoptimize=mapping_call[3],
                                  map_unexecutable_events=mapping_call[4])
         d2p.print_steps = True
@@ -542,7 +527,7 @@ def run_dcrxml_files():
 
 if __name__ == '__main__':
     # uncomment which one you need and read more in the function about what it does
-    # run_all()  # this is in line 411
-    # run_specific_dcr()  # this is in line 418
-    run_dcrxml_files()  # this is in line 441
+    # run_all()  # runs all possible 1,2 event and relation combinations (see the method definition and comments above)
+    # run_specific_dcr()  # runs a user defined dcr graph written as a python dict (see the method definition and comments above)
+    run_dcrxml_files()  # runs on specific dcrxml files (see the method definition and comments above)
     print('[i] Done!')

@@ -40,18 +40,18 @@
           <text>event_AddOrder2_label</text>
         </name>
       </transition>
-      <arc id="140126042068752" source="included_AddOrder" target="pend_MakePayment1" type="inhibitor"/>
-      <arc id="140126041943696" source="init_EditPayment0" target="executed_EditPayment"/>
-      <arc id="140126042071888" source="included_AddOrder" target="event_AddOrder2"/>
-      <arc id="140126042072016" source="pending_included_MakePayment" target="event_AddOrder2" type="inhibitor"/>
-      <arc id="140126042070416" source="pend_MakePayment1" target="executed_EditPayment"/>
-      <arc id="140126042070544" source="executed_EditPayment" target="pend_MakePayment1"/>
-      <arc id="140126042068560" source="pend_MakePayment1" target="included_AddOrder"/>
-      <arc id="140126041944272" source="event_EditPayment0" target="executed_EditPayment"/>
-      <arc id="140126041945168" source="executed_EditPayment" target="event_EditPayment0"/>
-      <arc id="140126041945808" source="executed_EditPayment" target="init_EditPayment0" type="inhibitor"/>
-      <arc id="140126042068048" source="pending_included_MakePayment" target="pend_MakePayment1"/>
-      <arc id="140126042072208" source="event_AddOrder2" target="pending_included_MakePayment"/>
+      <arc id="139632174685904" source="event_AddOrder2" target="pending_included_MakePayment"/>
+      <arc id="139632174681744" source="pending_included_MakePayment" target="pend_MakePayment1"/>
+      <arc id="139632174559376" source="event_EditPayment0" target="executed_EditPayment"/>
+      <arc id="139632174555280" source="executed_EditPayment" target="init_EditPayment0" type="inhibitor"/>
+      <arc id="139632174557584" source="init_EditPayment0" target="executed_EditPayment"/>
+      <arc id="139632174558864" source="executed_EditPayment" target="event_EditPayment0"/>
+      <arc id="139632174685584" source="included_AddOrder" target="event_AddOrder2"/>
+      <arc id="139632174685712" source="pending_included_MakePayment" target="event_AddOrder2" type="inhibitor"/>
+      <arc id="139632174684112" source="pend_MakePayment1" target="executed_EditPayment"/>
+      <arc id="139632174682448" source="included_AddOrder" target="pend_MakePayment1" type="inhibitor"/>
+      <arc id="139632174682256" source="pend_MakePayment1" target="included_AddOrder"/>
+      <arc id="139632174684240" source="executed_EditPayment" target="pend_MakePayment1"/>
     </page>
   </net>
 </pnml>
