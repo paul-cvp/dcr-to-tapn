@@ -7,6 +7,7 @@ from pm4py.objects.dcr.importer import importer as dcr_importer
 from src.mappings import exceptional_cases, single_relations, preoptimizer
 from src import util
 
+
 class Dcr2PetriTransport(object):
 
     def __init__(self, preoptimize=True, postoptimize=True, map_unexecutable_events=False) -> None:
@@ -87,7 +88,7 @@ class Dcr2PetriTransport(object):
         # for k, v in self.mapping_exceptions.self_exceptions.items():
         #     if event in v:
         #         event_in_self = True
-        if self.preoptimize:# and not event_in_self:
+        if self.preoptimize:  # and not event_in_self:
             ts = ['event']
             if default_make_exec and not event in G['marking']['executed'] and not event in self.preoptimizer.no_init_t:
                 ts.append('init')
@@ -101,18 +102,20 @@ class Dcr2PetriTransport(object):
 
     def create_event_pattern(self, event, G, tapn, m) -> (PetriNet, Marking):
         tapn, m = self.create_event_pattern_places(event, G, tapn, m)
-        tapn, ts = util.create_event_pattern_transitions_and_arcs(tapn, event, self.helper_struct, self.mapping_exceptions)
+        tapn, ts = util.create_event_pattern_transitions_and_arcs(tapn, event, self.helper_struct,
+                                                                  self.mapping_exceptions)
         self.helper_struct[event]['transitions'].extend(ts)
         return tapn, m
 
-    def post_optimize_petri_net_reachability_graph(self, tapn, m) -> PetriNet:
+    def post_optimize_petri_net_reachability_graph(self, tapn, m, G=None) -> PetriNet:
         from pm4py.objects.petri_net.utils import reachability_graph
-        #from pm4py.visualization.transition_system import visualizer as ts_visualizer
+        # from pm4py.visualization.transition_system import visualizer as ts_visualizer
         from pm4py.objects.petri_net.transport_invariant import semantics as tapn_semantics
 
         trans_sys = reachability_graph.construct_reachability_graph(tapn, m, use_trans_name=True,
-                                                                    parameters={'petri_semantics': tapn_semantics.TransportInvariantSemantics()
-        ,'max_elab_time': 2*60*60})
+                                                                    parameters={
+                                                                        'petri_semantics': tapn_semantics.TransportInvariantSemantics()
+                                                                        , 'max_elab_time': 2 * 60 * 60})
         # gviz = ts_visualizer.apply(trans_sys, parameters={ts_visualizer.Variants.VIEW_BASED.value.Parameters.FORMAT: "svg"})
         # ts_visualizer.view(gviz)
         fired_transitions = set()
@@ -131,9 +134,45 @@ class Dcr2PetriTransport(object):
         for state_list in trans_sys.states:
             for state in state_list.name:
                 changed_places.add(state)
+
         ps_to_remove = tapn.places.difference(changed_places)
+        parallel_places = set()
+        places_to_rename = {}
+        if G:
+            for event in G['events']:
+                for type, event_place in self.helper_struct[event]['places'].items():
+                    for type_prime, event_place_prime in self.helper_struct[event]['places'].items():
+                        if event_place and event_place_prime and event_place.name != event_place_prime.name and\
+                                event_place not in parallel_places:
+                            is_parallel = False
+                            ep_ins = event_place.in_arcs
+                            epp_ins = event_place_prime.in_arcs
+                            ep_outs = event_place.out_arcs
+                            epp_outs = event_place_prime.out_arcs
+                            if len(ep_ins) == len(epp_ins) and len(ep_outs) == len(epp_outs):
+                                ep_sources = set()
+                                epp_sources = set()
+                                for ep_in in ep_ins:
+                                    ep_sources.add(ep_in.source)
+                                for epp_in in epp_ins:
+                                    epp_sources.add(epp_in.source)
+                                ep_targets = set()
+                                epp_targets = set()
+                                for ep_out in ep_outs:
+                                    ep_targets.add(ep_out.target)
+                                for epp_out in epp_outs:
+                                    epp_targets.add(epp_out.target)
+                                if ep_sources == epp_sources and ep_targets == epp_targets:
+                                    is_parallel = True
+                            if is_parallel:
+                                parallel_places.add(event_place_prime)
+                                places_to_rename[event_place] = f'{type_prime}_{event_place.name}'
+        ps_to_remove = ps_to_remove.union(parallel_places)
         for p in ps_to_remove:
             tapn = pn_utils.remove_place(tapn, p)
+
+        for p, name in places_to_rename.items():
+            p.name = name
 
         return tapn
 
@@ -260,7 +299,7 @@ class Dcr2PetriTransport(object):
             tapn, m = self.create_event_pattern(event, G, tapn, m)
         # all self exceptions have been mapped at this point
 
-        sr = single_relations.SingleRelations(self.helper_struct,self.mapping_exceptions)
+        sr = single_relations.SingleRelations(self.helper_struct, self.mapping_exceptions)
         # map effect relations
         if self.print_steps:
             print('[i] map effect relations')
@@ -296,12 +335,15 @@ class Dcr2PetriTransport(object):
         if self.postoptimize:
             if self.print_steps:
                 print('[i] post optimizing')
-            tapn = self.post_optimize_petri_net_reachability_graph(tapn, m)
-
+            tapn = self.post_optimize_petri_net_reachability_graph(tapn, m, G)
 
         if self.print_steps:
             print(f'[i] export to {tapn_path}')
-        pnml_exporter.apply(tapn, m, tapn_path, variant=pnml_exporter.TAPN, parameters={'isTimed': self.timed})
+        pn_export_format = pnml_exporter.TAPN
+        if tapn_path.endswith("pnml"):
+            pn_export_format = pnml_exporter.PNML
+
+        pnml_exporter.apply(tapn, m, tapn_path, variant=pn_export_format, parameters={'isTimed': self.timed})
 
         # post-optimize based on tapaal simulation
         # if self.postoptimize:
@@ -316,11 +358,13 @@ class Dcr2PetriTransport(object):
 
         return tapn, m
 
+
 from copy import deepcopy
 import itertools
 from itertools import combinations
-def prepare_all_permutations():
 
+
+def prepare_all_permutations():
     dcr_template = {
         'events': set(),
         'conditionsFor': {},
@@ -346,7 +390,7 @@ def prepare_all_permutations():
         for i in range(6, 0, -1):
             for comb in combinations(all_relations, i):
                 if j == 1:
-                    for (ai,ae,ap) in itertools.product([True, False], repeat=3):
+                    for (ai, ae, ap) in itertools.product([True, False], repeat=3):
                         dcr = deepcopy(dcr_template)
                         dcr['events'] = {e1}
                         if ai:
@@ -362,7 +406,7 @@ def prepare_all_permutations():
                         key = f'self_{repr(comb)}_A{1 if ai else 0}{1 if ae else 0}{1 if ap else 0}'
                         dcrs_to_test[key] = dcr
                 else:
-                    for (ai,ae,ap,bi,be,bp) in itertools.product([True, False], repeat=6):
+                    for (ai, ae, ap, bi, be, bp) in itertools.product([True, False], repeat=6):
                         dcr = deepcopy(dcr_template)
                         dcr['events'] = {e1, e2}
                         if ai:
@@ -392,6 +436,7 @@ def prepare_all_permutations():
                         dcrs_to_test[key] = dcr
     return dcrs_to_test
 
+
 def complete_test(dcrs_to_test):
     past_k = None
     i = 0
@@ -409,12 +454,14 @@ def complete_test(dcrs_to_test):
             past_k = k_split[1]
         counter = counter + 1
 
+
 def run_all():
     '''
     this runs all permutations of 1 or 2 events and 1 or 6 relations and all of their possible markings
     '''
     dcrs_to_test = prepare_all_permutations()
     complete_test(dcrs_to_test)
+
 
 def run_specific_dcr():
     '''
@@ -427,7 +474,7 @@ def run_specific_dcr():
         'responseTo': {'A': {'B'}},
         'noResponseTo': {},
         'includesTo': {},
-        'excludesTo': {'B': {'A','B'}},
+        'excludesTo': {'B': {'A', 'B'}},
         # 'conditionsForDelays': {'A': {'B': 2}},
         # 'responseToDeadlines': {'C': {'B': 5}, 'A': {'B': 7}},
         'marking': {'executed': set(),
@@ -455,6 +502,7 @@ def run_specific_dcr():
     print('[i] dcr')
     tapn, m = d2p.dcr2tapn(dcr, tapn_path="../models/one_petri.tapn")
 
+
 def run_dcrxml_files():
     '''
     here you can specify which files you want to execute in a matrix
@@ -466,24 +514,25 @@ def run_dcrxml_files():
     Remember to create the models folder at the same level as the src folder and inside the models folder create the dcrxml folder
     '''
     dcrxml_tapn_files = [
-                         ['test_specific_mapping.xml', 'test_specific_mapping_unoptimized.tapn', True, False, False], # i=0
-                         ['test_specific_mapping.xml', 'test_specific_mapping.tapn', False, True, True], #i=1 etc.
-                         ['DCR_Indicators_220810_Fix2.xml', 'dcr_indicators_fix2_unoptimized.tapn', True, False, False],
-                         ['DCR_Indicators_220810_Fix2.xml', 'dcr_indicators_fix2.tapn', False, True, True],
-                         ['DCR_Indicators_220906_Fulllog.xml', 'dcr_indicators_full.tapn', False, True, True],
-                         ['Road Traffic Fine.xml', 'road_traffic_fine_unoptimized.tapn', True, False, False],
-                         ['Expense report example.xml', 'expense_report_unoptimized.tapn', True, False, False],
-                         ['Road Traffic Fine.xml', 'road_traffic_fine.tapn', False, True, True],
-                         ['Expense report example.xml', 'expense_report.tapn', False, True, True], #i=8
-                         ['eshop.xml', 'eshop_unoptimized.tapn', False, False, True],
-                         ['eshop.xml', 'eshop_dcr_analysis.tapn', True, False, False],
-                         ['eshop.xml', 'eshop_pn_reachability.tapn', False, True, False],
-                         ['eshop.xml', 'eshop_full_optimization.tapn', True, True, False]
-                         ]
-    #this runs from i=5 to 8 (so the road traffic fine and expense report optimized and unoptimized conversions
-    for i in [9,10,11,12]:
+        ['test_specific_mapping.xml', 'test_specific_mapping_unoptimized.tapn', True, False, False],  # i=0
+        ['test_specific_mapping.xml', 'test_specific_mapping.tapn', False, True, True],  # i=1 etc.
+        ['DCR_Indicators_220810_Fix2.xml', 'dcr_indicators_fix2_unoptimized.tapn', True, False, False],
+        ['DCR_Indicators_220810_Fix2.xml', 'dcr_indicators_fix2.tapn', False, True, True],
+        ['DCR_Indicators_220906_Fulllog.xml', 'dcr_indicators_full.tapn', False, True, True],
+        ['Road Traffic Fine.xml', 'road_traffic_fine_unoptimized.tapn', True, False, False],
+        ['Expense report example.xml', 'expense_report_unoptimized.tapn', True, False, False],
+        ['Road Traffic Fine.xml', 'road_traffic_fine.tapn', False, True, True],
+        ['Expense report example.xml', 'expense_report.tapn', False, True, True],  # i=8
+        ['eshop.xml', 'eshop_unoptimized.pnml', False, False, True],
+        ['eshop.xml', 'eshop_dcr_analysis.pnml', True, False, False],
+        ['eshop.xml', 'eshop_pn_reachability.pnml', False, True, False],
+        ['eshop.xml', 'eshop_full_optimization.pnml', True, True, False]
+    ]
+    # this runs from i=5 to 8 (so the road traffic fine and expense report optimized and unoptimized conversions
+    for i in [9, 10, 11, 12]:
         mapping_call = dcrxml_tapn_files[i]
-        d2p = Dcr2PetriTransport(preoptimize=mapping_call[2], postoptimize=mapping_call[3], map_unexecutable_events=mapping_call[4])
+        d2p = Dcr2PetriTransport(preoptimize=mapping_call[2], postoptimize=mapping_call[3],
+                                 map_unexecutable_events=mapping_call[4])
         d2p.print_steps = True
         print(f'[i] import {mapping_call[0]}')
         dcr = dcr_importer.apply(f'../models/dcrxml/{mapping_call[0]}')
@@ -493,7 +542,7 @@ def run_dcrxml_files():
 
 if __name__ == '__main__':
     # uncomment which one you need and read more in the function about what it does
-    run_all()  # this is in line 411
-    #run_specific_dcr()  # this is in line 418
-    #run_dcrxml_files()  # this is in line 441
+    # run_all()  # this is in line 411
+    # run_specific_dcr()  # this is in line 418
+    run_dcrxml_files()  # this is in line 441
     print('[i] Done!')

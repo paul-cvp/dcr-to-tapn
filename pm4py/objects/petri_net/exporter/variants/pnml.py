@@ -55,7 +55,8 @@ def export_petri_tree(petrinet, marking, final_marking=None, export_prom5=False,
     root = etree.Element("pnml")
     net = etree.SubElement(root, "net")
     net.set("id", "net1")
-    net.set("type", "http://www.pnml.org/version-2009/grammar/pnmlcoremodel")
+    # net.set("type", "http://www.pnml.org/version-2009/grammar/pnmlcoremodel")
+    net.set("type", "http://www.pnml.org/version-2009/grammar/pnml")
     if export_prom5 is True:
         page = net
     else:
@@ -169,9 +170,12 @@ def export_petri_tree(petrinet, marking, final_marking=None, export_prom5=False,
             arc_weight.text = str(arc.weight)
 
         for prop_key in arc.properties:
-            element = etree.SubElement(arc_el, prop_key)
-            element_text = etree.SubElement(element, "text")
-            element_text.text = str(arc.properties[prop_key])
+            if prop_key == petri_properties.ARCTYPE and arc.properties[petri_properties.ARCTYPE] == petri_properties.INHIBITOR_ARC:
+                arc_el.set("type", "inhibitor")
+            else:
+                element = etree.SubElement(arc_el, prop_key)
+                element_text = etree.SubElement(element, "text")
+                element_text.text = str(arc.properties[prop_key])
 
     if len(final_marking) > 0:
         finalmarkings = etree.SubElement(net, "finalmarkings")
