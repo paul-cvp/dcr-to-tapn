@@ -161,6 +161,7 @@ cython_debug/
 
 # project specific
 models/*
+!models/dcrxml
 models/dcrxml/*
 !models/dcrxml/eshop.xml
 !models/eshop_dcr_analysis.pnml
