@@ -160,7 +160,7 @@ cython_debug/
 .idea/
 
 # project specific
-models/
+models/*
 !models/eshop.xml
 !models/eshop_dcr_analysis.pnml
 !models/eshop_full_optimization.pnml

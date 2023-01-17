@@ -1,0 +1,134 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<pnml>
+  <net id="net1" type="http://www.pnml.org/version-2009/grammar/pnml">
+    <page id="n0">
+      <place id="executed_EditPayment">
+        <name>
+          <text>executed_EditPayment</text>
+        </name>
+      </place>
+      <place id="pending_excluded_MakePayment">
+        <name>
+          <text>pending_excluded_MakePayment</text>
+        </name>
+      </place>
+      <place id="pending_MakePayment">
+        <name>
+          <text>pending_MakePayment</text>
+        </name>
+      </place>
+      <place id="included_MakePayment">
+        <name>
+          <text>included_MakePayment</text>
+        </name>
+      </place>
+      <place id="included_AddOrder">
+        <name>
+          <text>included_AddOrder</text>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+      </place>
+      <transition id="event_EditPayment0">
+        <name>
+          <text>event_EditPayment0_label</text>
+        </name>
+      </transition>
+      <transition id="event_MakePayment0">
+        <name>
+          <text>event_MakePayment0_label</text>
+        </name>
+      </transition>
+      <transition id="init_EditPayment0">
+        <name>
+          <text>init_EditPayment0_label</text>
+        </name>
+      </transition>
+      <transition id="event_AddOrder0">
+        <name>
+          <text>event_AddOrder0_label</text>
+        </name>
+      </transition>
+      <transition id="pend_MakePayment0">
+        <name>
+          <text>pend_MakePayment0_label</text>
+        </name>
+      </transition>
+      <transition id="event_MakePayment1">
+        <name>
+          <text>event_MakePayment1_label</text>
+        </name>
+      </transition>
+      <transition id="pend_MakePayment1">
+        <name>
+          <text>pend_MakePayment1_label</text>
+        </name>
+      </transition>
+      <transition id="event_AddOrder1">
+        <name>
+          <text>event_AddOrder1_label</text>
+        </name>
+      </transition>
+      <transition id="event_AddOrder2">
+        <name>
+          <text>event_AddOrder2_label</text>
+        </name>
+      </transition>
+      <transition id="event_AddOrder3">
+        <name>
+          <text>event_AddOrder3_label</text>
+        </name>
+      </transition>
+      <arc id="140126043743760" source="included_MakePayment" target="event_AddOrder0"/>
+      <arc id="140126043743888" source="event_AddOrder0" target="pending_MakePayment"/>
+      <arc id="140126043744016" source="pending_MakePayment" target="event_AddOrder0" type="inhibitor"/>
+      <arc id="140126043742032" source="event_AddOrder2" target="included_MakePayment"/>
+      <arc id="140126043740048" source="executed_EditPayment" target="event_MakePayment1"/>
+      <arc id="140126043742160" source="event_AddOrder2" target="pending_MakePayment"/>
+      <arc id="140126043736720" source="pending_MakePayment" target="event_MakePayment1" type="inhibitor"/>
+      <arc id="140126043734288" source="included_AddOrder" target="event_AddOrder0"/>
+      <arc id="140126043735312" source="included_MakePayment" target="event_MakePayment0"/>
+      <arc id="140126043735440" source="pending_MakePayment" target="event_MakePayment0" type="inhibitor"/>
+      <arc id="140126043736592" source="included_MakePayment" target="event_MakePayment1"/>
+      <arc id="140126043739152" source="event_MakePayment0" target="executed_EditPayment"/>
+      <arc id="140126043739408" source="executed_EditPayment" target="event_MakePayment0"/>
+      <arc id="140126043739536" source="pend_MakePayment0" target="executed_EditPayment"/>
+      <arc id="140126043739792" source="executed_EditPayment" target="pend_MakePayment0"/>
+      <arc id="140126043739920" source="event_MakePayment1" target="executed_EditPayment"/>
+      <arc id="140126043740176" source="pend_MakePayment1" target="executed_EditPayment"/>
+      <arc id="140126043740304" source="executed_EditPayment" target="pend_MakePayment1"/>
+      <arc id="140126043742288" source="pending_MakePayment" target="event_AddOrder2" type="inhibitor"/>
+      <arc id="140126043742416" source="pending_excluded_MakePayment" target="event_AddOrder2" type="inhibitor"/>
+      <arc id="140126043742800" source="included_AddOrder" target="event_AddOrder3"/>
+      <arc id="140126043738832" source="pend_MakePayment0" target="included_AddOrder"/>
+      <arc id="140126043738960" source="included_AddOrder" target="pend_MakePayment0"/>
+      <arc id="140126043741712" source="included_AddOrder" target="event_AddOrder2"/>
+      <arc id="140126043741840" source="included_MakePayment" target="event_AddOrder2" type="inhibitor"/>
+      <arc id="140126043736016" source="pending_MakePayment" target="pend_MakePayment0"/>
+      <arc id="140126043738704" source="included_AddOrder" target="event_MakePayment0"/>
+      <arc id="140126043737808" source="included_AddOrder" target="event_MakePayment1" type="inhibitor"/>
+      <arc id="140126043738320" source="included_AddOrder" target="pend_MakePayment1" type="inhibitor"/>
+      <arc id="140126043737936" source="pend_MakePayment1" target="included_AddOrder"/>
+      <arc id="140126043738448" source="event_MakePayment0" target="included_AddOrder"/>
+      <arc id="140126043601616" source="event_EditPayment0" target="executed_EditPayment"/>
+      <arc id="140126043602256" source="init_EditPayment0" target="executed_EditPayment"/>
+      <arc id="140126043602512" source="executed_EditPayment" target="init_EditPayment0" type="inhibitor"/>
+      <arc id="140126043601872" source="executed_EditPayment" target="event_EditPayment0"/>
+      <arc id="140126043735888" source="included_MakePayment" target="pend_MakePayment0"/>
+      <arc id="140126043740752" source="included_AddOrder" target="event_AddOrder1"/>
+      <arc id="140126043740880" source="event_AddOrder1" target="included_MakePayment"/>
+      <arc id="140126043741008" source="included_MakePayment" target="event_AddOrder1"/>
+      <arc id="140126043743120" source="included_MakePayment" target="event_AddOrder3" type="inhibitor"/>
+      <arc id="140126043741136" source="event_AddOrder1" target="pending_MakePayment"/>
+      <arc id="140126043743248" source="event_AddOrder3" target="included_MakePayment"/>
+      <arc id="140126043737168" source="included_MakePayment" target="pend_MakePayment1"/>
+      <arc id="140126043741264" source="pending_MakePayment" target="event_AddOrder1"/>
+      <arc id="140126043743376" source="event_AddOrder3" target="pending_MakePayment"/>
+      <arc id="140126043737296" source="pending_MakePayment" target="pend_MakePayment1"/>
+      <arc id="140126043743504" source="pending_excluded_MakePayment" target="event_AddOrder3"/>
+      <arc id="140126043743632" source="event_AddOrder0" target="included_MakePayment"/>
+      <arc id="140126043737552" source="event_MakePayment1" target="included_AddOrder"/>
+    </page>
+  </net>
+</pnml>
