@@ -168,3 +168,9 @@ models/dcrxml/*
 !models/eshop_full_optimization.pnml
 !models/eshop_unoptimized.pnml
 !models/eshop_pn_reachability.pnml
+
+src/dcr_to_petri_fase.py
+src/dcr_to_petri_one_safe_optimized_timed.py
+src/dcr_to_petri_one_safe_optimized_timed_backup.py
+src/dcr_to_petri_one_safe_unoptimized.py
+src/dcr_to_petri_readable_long.py

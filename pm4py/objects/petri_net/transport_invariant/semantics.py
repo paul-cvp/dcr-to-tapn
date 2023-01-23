@@ -114,7 +114,8 @@ def is_enabled(t, pn, m):
                 number_tokens_in_source = m[a.source]
                 #TODO age of tokens in source
             if properties.ARCTYPE in a.properties and (a.properties[properties.ARCTYPE] == properties.INHIBITOR_ARC or
-                                                        a.properties[properties.ARCTYPE] == "tapnInhibitor"):
+                                                        a.properties[properties.ARCTYPE] == "tapnInhibitor" or
+                                                        a.properties[properties.ARCTYPE] == "inhibitor"):
                 if m[a.source] > 0:
                     return False
                 elif a.properties[properties.ARCTYPE] == properties.TRANSPORT_ARC:
