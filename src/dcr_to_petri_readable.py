@@ -7,7 +7,6 @@ from pm4py.objects.dcr.importer import importer as dcr_importer
 from src.mappings import exceptional_cases, single_relations, preoptimizer
 from src import util
 
-
 class Dcr2PetriTransport(object):
 
     def __init__(self, preoptimize=True, postoptimize=True, map_unexecutable_events=False) -> None:
@@ -19,6 +18,8 @@ class Dcr2PetriTransport(object):
         self.preoptimizer = preoptimizer.Preoptimizer()
         self.transitions = {}
         self.mapping_exceptions = None
+        self.reachability_timeout = None
+        self.print_steps = False
 
         # self.sim_trace_from_tapaal = None
 
@@ -111,11 +112,13 @@ class Dcr2PetriTransport(object):
         from pm4py.objects.petri_net.utils import reachability_graph
         # from pm4py.visualization.transition_system import visualizer as ts_visualizer
         from pm4py.objects.petri_net.transport_invariant import semantics as tapn_semantics
-
+        max_elab_time = 2 * 60 * 60 #2 hours
+        if self.reachability_timeout:
+            max_elab_time = self.reachability_timeout
         trans_sys = reachability_graph.construct_reachability_graph(tapn, m, use_trans_name=True,
                                                                     parameters={
                                                                         'petri_semantics': tapn_semantics.TransportInvariantSemantics()
-                                                                        , 'max_elab_time': 2 * 60 * 60})
+                                                                        , 'max_elab_time': max_elab_time})
         # gviz = ts_visualizer.apply(trans_sys, parameters={ts_visualizer.Variants.VIEW_BASED.value.Parameters.FORMAT: "svg"})
         # ts_visualizer.view(gviz)
         fired_transitions = set()
@@ -279,12 +282,13 @@ class Dcr2PetriTransport(object):
     def dcr2tapn(self, G, tapn_path) -> (PetriNet, Marking):
         self.basic = True  # True (basic) = inc,ex,resp,cond | False = basic + no-resp,mil
         self.timed = False  # False = untimed | True = timed cond (delay) and resp (deadline)
-        self.print_steps = False
         self.initialize_helper_struct(G)
         tapn = PetriNet("Dcr2Tapn")
         m = Marking()
         # pre-optimize mapping based on DCR graph behaviour
         if self.preoptimize:
+            if self.print_steps:
+                print('[i] preoptimizing')
             self.preoptimizer.pre_optimize_based_on_dcr_behaviour(G)
             if not self.map_unexecutable_events:
                 G = self.preoptimizer.remove_un_executable_events_from_dcr(G)
@@ -292,9 +296,13 @@ class Dcr2PetriTransport(object):
         # including the handling of exception cases from the induction step
         G = self.mapping_exceptions.filter_exceptional_cases(G)
         if self.preoptimize:
+            if self.print_steps:
+                print('[i] finding exceptional behaviour')
             self.preoptimizer.preoptimize_based_on_exceptional_cases(G, self.mapping_exceptions)
 
         # map events
+        if self.print_steps:
+            print('[i] mapping events')
         for event in G['events']:
             tapn, m = self.create_event_pattern(event, G, tapn, m)
         # all self exceptions have been mapped at this point
@@ -327,10 +335,12 @@ class Dcr2PetriTransport(object):
             for event in G['milestonesFor']:
                 for event_prime in G['milestonesFor'][event]:
                     tapn = sr.create_milestone_pattern(event, event_prime, tapn)
+
         # handle all relation exceptions
         if self.print_steps:
             print('[i] handle all relation exceptions')
         tapn = self.mapping_exceptions.map_exceptional_cases_between_events(tapn, m)
+
         # post-optimize based on the petri net reachability graph
         if self.postoptimize:
             if self.print_steps:
@@ -446,7 +456,7 @@ def complete_test(dcrs_to_test):
         file_name = k.replace("'", "").replace("(", "").replace(")", "").replace(",", "").replace(" ", "_")
         file_name = file_name + ".tapn"
         res_path = f"../models/all/{file_name}"
-        d2p = Dcr2PetriTransport(postoptimize=True)
+        d2p = Dcr2PetriTransport(preoptimize=True, postoptimize=True, map_unexecutable_events=False)
         tapn = d2p.dcr2tapn(v, res_path)
         if k_split[1] != past_k:
             # print(f'[i] {k}')
@@ -469,12 +479,12 @@ def run_specific_dcr():
     '''
     dcr = {
         'events': {'A', 'B'},
-        'conditionsFor': {'B': {'A'}},
-        # 'milestonesFor': {},
-        'responseTo': {'A': {'B'}},
-        # 'noResponseTo': {},
+        'conditionsFor': {'A': {'B'}},
+        'milestonesFor': {},
+        'responseTo': {},
+        'noResponseTo': {},
         'includesTo': {},
-        'excludesTo': {'B': {'A', 'B'}},
+        'excludesTo': {'A': {'B'}},
         # 'conditionsForDelays': {'A': {'B': 2}},
         # 'responseToDeadlines': {'C': {'B': 5}, 'A': {'B': 7}},
         'marking': {'executed': set(),
@@ -483,7 +493,7 @@ def run_specific_dcr():
                     }
     }
 
-    d2p = Dcr2PetriTransport(preoptimize=False, postoptimize=True, map_unexecutable_events=False)
+    d2p = Dcr2PetriTransport(preoptimize=True, postoptimize=True, map_unexecutable_events=False)
     print('[i] dcr')
     tapn, m = d2p.dcr2tapn(dcr, tapn_path="../models/one_petri.tapn")
 
@@ -527,7 +537,7 @@ def run_dcrxml_files():
 
 if __name__ == '__main__':
     # uncomment which one you need and read more in the function about what it does
-    # run_all()  # runs all possible 1,2 event and relation combinations (see the method definition and comments above)
-    # run_specific_dcr()  # runs a user defined dcr graph written as a python dict (see the method definition and comments above)
-    run_dcrxml_files()  # runs on specific dcrxml files (see the method definition and comments above)
+    run_all()  # runs all possible 1,2 event and relation combinations (see the method definition and comments above)
+    #run_specific_dcr()  # runs a user defined dcr graph written as a python dict (see the method definition and comments above)
+    #run_dcrxml_files()  # runs on specific dcrxml files (see the method definition and comments above)
     print('[i] Done!')

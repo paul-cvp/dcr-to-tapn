@@ -1,0 +1,91 @@
+<dcrgraph title="BPI Challenge 2017 - Offer log.xes">
+  <specification>
+    <resources>
+      <events>
+        <event id="O_Cancelled"/>
+        <event id="O_Accepted"/>
+        <event id="O_Returned"/>
+        <event id="O_Created"/>
+        <event id="O_Refused"/>
+        <event id="O_Sent (mail and online)"/>
+        <event id="O_Create Offer"/>
+        <event id="O_Sent (online only)"/>
+      </events>
+      <labels>
+        <label id="O_Cancelled"/>
+        <label id="O_Accepted"/>
+        <label id="O_Returned"/>
+        <label id="O_Created"/>
+        <label id="O_Refused"/>
+        <label id="O_Sent (mail and online)"/>
+        <label id="O_Create Offer"/>
+        <label id="O_Sent (online only)"/>
+      </labels>
+      <labelMappings>
+        <labelMapping eventId="O_Cancelled" labelId="O_Cancelled"/>
+        <labelMapping eventId="O_Accepted" labelId="O_Accepted"/>
+        <labelMapping eventId="O_Returned" labelId="O_Returned"/>
+        <labelMapping eventId="O_Created" labelId="O_Created"/>
+        <labelMapping eventId="O_Refused" labelId="O_Refused"/>
+        <labelMapping eventId="O_Sent (mail and online)" labelId="O_Sent (mail and online)"/>
+        <labelMapping eventId="O_Create Offer" labelId="O_Create Offer"/>
+        <labelMapping eventId="O_Sent (online only)" labelId="O_Sent (online only)"/>
+      </labelMappings>
+    </resources>
+    <constraints>
+      <conditions>
+        <condition sourceId="O_Created" targetId="O_Cancelled"/>
+        <condition sourceId="O_Returned" targetId="O_Accepted"/>
+        <condition sourceId="O_Sent (mail and online)" targetId="O_Returned"/>
+        <condition sourceId="O_Sent (online only)" targetId="O_Returned"/>
+        <condition sourceId="O_Create Offer" targetId="O_Created"/>
+        <condition sourceId="O_Created" targetId="O_Refused"/>
+        <condition sourceId="O_Created" targetId="O_Sent (mail and online)"/>
+        <condition sourceId="O_Created" targetId="O_Sent (online only)"/>
+      </conditions>
+      <responses>
+        <response sourceId="O_Create Offer" targetId="O_Created"/>
+      </responses>
+      <excludes>
+        <exclude sourceId="O_Cancelled" targetId="O_Cancelled"/>
+        <exclude sourceId="O_Cancelled" targetId="O_Accepted"/>
+        <exclude sourceId="O_Cancelled" targetId="O_Refused"/>
+        <exclude sourceId="O_Accepted" targetId="O_Cancelled"/>
+        <exclude sourceId="O_Accepted" targetId="O_Accepted"/>
+        <exclude sourceId="O_Accepted" targetId="O_Refused"/>
+        <exclude sourceId="O_Returned" targetId="O_Returned"/>
+        <exclude sourceId="O_Created" targetId="O_Created"/>
+        <exclude sourceId="O_Refused" targetId="O_Cancelled"/>
+        <exclude sourceId="O_Refused" targetId="O_Accepted"/>
+        <exclude sourceId="O_Refused" targetId="O_Refused"/>
+        <exclude sourceId="O_Sent (mail and online)" targetId="O_Sent (mail and online)"/>
+        <exclude sourceId="O_Sent (mail and online)" targetId="O_Sent (online only)"/>
+        <exclude sourceId="O_Create Offer" targetId="O_Create Offer"/>
+        <exclude sourceId="O_Sent (online only)" targetId="O_Sent (mail and online)"/>
+        <exclude sourceId="O_Sent (online only)" targetId="O_Sent (online only)"/>
+      </excludes>
+      <includes>
+        <include sourceId="O_Returned" targetId="O_Accepted"/>
+        <include sourceId="O_Created" targetId="O_Sent (mail and online)"/>
+        <include sourceId="O_Created" targetId="O_Sent (online only)"/>
+        <include sourceId="O_Create Offer" targetId="O_Created"/>
+      </includes>
+    </constraints>
+  </specification>
+  <runtime>
+    <marking>
+      <executed/>
+      <included>
+        <event id="O_Cancelled"/>
+        <event id="O_Accepted"/>
+        <event id="O_Returned"/>
+        <event id="O_Created"/>
+        <event id="O_Refused"/>
+        <event id="O_Sent (mail and online)"/>
+        <event id="O_Create Offer"/>
+        <event id="O_Sent (online only)"/>
+      </included>
+      <pendingResponses/>
+    </marking>
+  </runtime>
+</dcrgraph>

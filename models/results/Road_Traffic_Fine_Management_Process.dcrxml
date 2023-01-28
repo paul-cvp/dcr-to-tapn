@@ -1,0 +1,95 @@
+<dcrgraph title="Road_Traffic_Fine_Management_Process.xes">
+  <specification>
+    <resources>
+      <events>
+        <event id="Insert Date Appeal to Prefecture"/>
+        <event id="Send for Credit Collection"/>
+        <event id="Receive Result Appeal from Prefecture"/>
+        <event id="Notify Result Appeal to Offender"/>
+        <event id="Appeal to Judge"/>
+        <event id="Send Fine"/>
+        <event id="Send Appeal to Prefecture"/>
+        <event id="Create Fine"/>
+        <event id="Insert Fine Notification"/>
+        <event id="Add penalty"/>
+        <event id="Payment"/>
+      </events>
+      <labels>
+        <label id="Insert Date Appeal to Prefecture"/>
+        <label id="Send for Credit Collection"/>
+        <label id="Receive Result Appeal from Prefecture"/>
+        <label id="Notify Result Appeal to Offender"/>
+        <label id="Appeal to Judge"/>
+        <label id="Send Fine"/>
+        <label id="Send Appeal to Prefecture"/>
+        <label id="Create Fine"/>
+        <label id="Insert Fine Notification"/>
+        <label id="Add penalty"/>
+        <label id="Payment"/>
+      </labels>
+      <labelMappings>
+        <labelMapping eventId="Insert Date Appeal to Prefecture" labelId="Insert Date Appeal to Prefecture"/>
+        <labelMapping eventId="Send for Credit Collection" labelId="Send for Credit Collection"/>
+        <labelMapping eventId="Receive Result Appeal from Prefecture" labelId="Receive Result Appeal from Prefecture"/>
+        <labelMapping eventId="Notify Result Appeal to Offender" labelId="Notify Result Appeal to Offender"/>
+        <labelMapping eventId="Appeal to Judge" labelId="Appeal to Judge"/>
+        <labelMapping eventId="Send Fine" labelId="Send Fine"/>
+        <labelMapping eventId="Send Appeal to Prefecture" labelId="Send Appeal to Prefecture"/>
+        <labelMapping eventId="Create Fine" labelId="Create Fine"/>
+        <labelMapping eventId="Insert Fine Notification" labelId="Insert Fine Notification"/>
+        <labelMapping eventId="Add penalty" labelId="Add penalty"/>
+        <labelMapping eventId="Payment" labelId="Payment"/>
+      </labelMappings>
+    </resources>
+    <constraints>
+      <conditions>
+        <condition sourceId="Create Fine" targetId="Insert Date Appeal to Prefecture"/>
+        <condition sourceId="Add penalty" targetId="Send for Credit Collection"/>
+        <condition sourceId="Send Fine" targetId="Receive Result Appeal from Prefecture"/>
+        <condition sourceId="Insert Fine Notification" targetId="Notify Result Appeal to Offender"/>
+        <condition sourceId="Create Fine" targetId="Appeal to Judge"/>
+        <condition sourceId="Create Fine" targetId="Send Fine"/>
+        <condition sourceId="Create Fine" targetId="Send Appeal to Prefecture"/>
+        <condition sourceId="Send Fine" targetId="Insert Fine Notification"/>
+        <condition sourceId="Insert Fine Notification" targetId="Add penalty"/>
+        <condition sourceId="Create Fine" targetId="Payment"/>
+      </conditions>
+      <responses>
+        <response sourceId="Insert Fine Notification" targetId="Add penalty"/>
+      </responses>
+      <excludes>
+        <exclude sourceId="Insert Date Appeal to Prefecture" targetId="Insert Date Appeal to Prefecture"/>
+        <exclude sourceId="Send for Credit Collection" targetId="Send for Credit Collection"/>
+        <exclude sourceId="Send for Credit Collection" targetId="Payment"/>
+        <exclude sourceId="Receive Result Appeal from Prefecture" targetId="Receive Result Appeal from Prefecture"/>
+        <exclude sourceId="Notify Result Appeal to Offender" targetId="Notify Result Appeal to Offender"/>
+        <exclude sourceId="Appeal to Judge" targetId="Appeal to Judge"/>
+        <exclude sourceId="Send Fine" targetId="Send Fine"/>
+        <exclude sourceId="Send Appeal to Prefecture" targetId="Send Appeal to Prefecture"/>
+        <exclude sourceId="Create Fine" targetId="Create Fine"/>
+        <exclude sourceId="Insert Fine Notification" targetId="Insert Fine Notification"/>
+        <exclude sourceId="Add penalty" targetId="Add penalty"/>
+      </excludes>
+      <includes/>
+    </constraints>
+  </specification>
+  <runtime>
+    <marking>
+      <executed/>
+      <included>
+        <event id="Insert Date Appeal to Prefecture"/>
+        <event id="Send for Credit Collection"/>
+        <event id="Receive Result Appeal from Prefecture"/>
+        <event id="Notify Result Appeal to Offender"/>
+        <event id="Appeal to Judge"/>
+        <event id="Send Fine"/>
+        <event id="Send Appeal to Prefecture"/>
+        <event id="Create Fine"/>
+        <event id="Insert Fine Notification"/>
+        <event id="Add penalty"/>
+        <event id="Payment"/>
+      </included>
+      <pendingResponses/>
+    </marking>
+  </runtime>
+</dcrgraph>

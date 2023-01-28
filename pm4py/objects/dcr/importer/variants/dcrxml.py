@@ -27,7 +27,10 @@ def parse_element(curr_el, parent, dcr):
             event = curr_el.get('sourceId')
             event_prime = curr_el.get('targetId')
             filter_level = curr_el.get('filterLevel')
-            description = curr_el.get('description').strip()  # might have an ISO format duration
+            iso_description = curr_el.get('description')  # might have an ISO format duration
+            description = None
+            if iso_description:
+                description = iso_description.strip()  # might have an ISO format duration
             delay = curr_el.get('time')
             groups = curr_el.get('groups')
             if not dcr['conditionsFor'].__contains__(event_prime):
@@ -45,7 +48,10 @@ def parse_element(curr_el, parent, dcr):
             event = curr_el.get('sourceId')
             event_prime = curr_el.get('targetId')
             filter_level = curr_el.get('filterLevel')
-            description = curr_el.get('description').strip()  # might have an ISO format duration
+            iso_description = curr_el.get('description')  # might have an ISO format duration
+            description = None
+            if iso_description:
+                description = iso_description.strip()  # might have an ISO format duration
             deadline = curr_el.get('time')
             groups = curr_el.get('groups')
             if not dcr['responseTo'].__contains__(event):
@@ -63,7 +69,10 @@ def parse_element(curr_el, parent, dcr):
             event = curr_el.get('sourceId')
             event_prime = curr_el.get('targetId')
             filter_level = curr_el.get('filterLevel')
-            description = curr_el.get('description').strip()  # might have an ISO format duration
+            iso_description = curr_el.get('description')  # might have an ISO format duration
+            description = None
+            if iso_description:
+                description = iso_description.strip()  # might have an ISO format duration
             deadline = curr_el.get('time')
             groups = curr_el.get('groups')
             if not dcr[f'{tag}sTo'].__contains__(event):
@@ -73,7 +82,10 @@ def parse_element(curr_el, parent, dcr):
             event = curr_el.get('sourceId')
             event_prime = curr_el.get('targetId')
             filter_level = curr_el.get('filterLevel')
-            description = curr_el.get('description').strip()  # might have an ISO format duration
+            iso_description = curr_el.get('description')  # might have an ISO format duration
+            description = None
+            if iso_description:
+                description = iso_description.strip()  # might have an ISO format duration
             deadline = curr_el.get('time')
             groups = curr_el.get('groups')
             if not dcr[f'{tag}sFor'].__contains__(event_prime):

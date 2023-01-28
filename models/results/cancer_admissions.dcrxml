@@ -1,0 +1,52 @@
+<dcrgraph title="cancer_admissions.xes">
+  <specification>
+    <resources>
+      <events>
+        <event id="admission"/>
+        <event id="discharge"/>
+        <event id="ED reg"/>
+        <event id="ED out"/>
+        <event id="death"/>
+      </events>
+      <labels>
+        <label id="admission"/>
+        <label id="discharge"/>
+        <label id="ED reg"/>
+        <label id="ED out"/>
+        <label id="death"/>
+      </labels>
+      <labelMappings>
+        <labelMapping eventId="admission" labelId="admission"/>
+        <labelMapping eventId="discharge" labelId="discharge"/>
+        <labelMapping eventId="ED reg" labelId="ED reg"/>
+        <labelMapping eventId="ED out" labelId="ED out"/>
+        <labelMapping eventId="death" labelId="death"/>
+      </labelMappings>
+    </resources>
+    <constraints>
+      <conditions/>
+      <responses/>
+      <excludes>
+        <exclude sourceId="admission" targetId="admission"/>
+        <exclude sourceId="discharge" targetId="discharge"/>
+        <exclude sourceId="ED reg" targetId="ED reg"/>
+        <exclude sourceId="ED out" targetId="ED out"/>
+        <exclude sourceId="death" targetId="death"/>
+      </excludes>
+      <includes/>
+    </constraints>
+  </specification>
+  <runtime>
+    <marking>
+      <executed/>
+      <included>
+        <event id="admission"/>
+        <event id="discharge"/>
+        <event id="ED reg"/>
+        <event id="ED out"/>
+        <event id="death"/>
+      </included>
+      <pendingResponses/>
+    </marking>
+  </runtime>
+</dcrgraph>

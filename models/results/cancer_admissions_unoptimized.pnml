@@ -1,0 +1,302 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<pnml>
+  <net id="net1" type="http://www.pnml.org/version-2009/grammar/pnml">
+    <page id="n0">
+      <place id="pending_excluded_ED reg">
+        <name>
+          <text>pending_excluded_ED reg</text>
+        </name>
+      </place>
+      <place id="pending_ED reg">
+        <name>
+          <text>pending_ED reg</text>
+        </name>
+      </place>
+      <place id="pending_ED out">
+        <name>
+          <text>pending_ED out</text>
+        </name>
+      </place>
+      <place id="included_discharge">
+        <name>
+          <text>included_discharge</text>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+      </place>
+      <place id="pending_excluded_ED out">
+        <name>
+          <text>pending_excluded_ED out</text>
+        </name>
+      </place>
+      <place id="pending_excluded_discharge">
+        <name>
+          <text>pending_excluded_discharge</text>
+        </name>
+      </place>
+      <place id="executed_discharge">
+        <name>
+          <text>executed_discharge</text>
+        </name>
+      </place>
+      <place id="pending_death">
+        <name>
+          <text>pending_death</text>
+        </name>
+      </place>
+      <place id="pending_excluded_death">
+        <name>
+          <text>pending_excluded_death</text>
+        </name>
+      </place>
+      <place id="executed_admission">
+        <name>
+          <text>executed_admission</text>
+        </name>
+      </place>
+      <place id="executed_death">
+        <name>
+          <text>executed_death</text>
+        </name>
+      </place>
+      <place id="executed_ED reg">
+        <name>
+          <text>executed_ED reg</text>
+        </name>
+      </place>
+      <place id="included_ED reg">
+        <name>
+          <text>included_ED reg</text>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+      </place>
+      <place id="included_ED out">
+        <name>
+          <text>included_ED out</text>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+      </place>
+      <place id="executed_ED out">
+        <name>
+          <text>executed_ED out</text>
+        </name>
+      </place>
+      <place id="pending_discharge">
+        <name>
+          <text>pending_discharge</text>
+        </name>
+      </place>
+      <place id="included_death">
+        <name>
+          <text>included_death</text>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+      </place>
+      <place id="included_admission">
+        <name>
+          <text>included_admission</text>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+      </place>
+      <place id="pending_admission">
+        <name>
+          <text>pending_admission</text>
+        </name>
+      </place>
+      <place id="pending_excluded_admission">
+        <name>
+          <text>pending_excluded_admission</text>
+        </name>
+      </place>
+      <transition id="initpend_death0">
+        <name>
+          <text>initpend_death0_label</text>
+        </name>
+      </transition>
+      <transition id="initpend_ED reg0">
+        <name>
+          <text>initpend_ED reg0_label</text>
+        </name>
+      </transition>
+      <transition id="init_admission0">
+        <name>
+          <text>init_admission0_label</text>
+        </name>
+      </transition>
+      <transition id="event_ED out0">
+        <name>
+          <text>event_ED out0_label</text>
+        </name>
+      </transition>
+      <transition id="event_discharge0">
+        <name>
+          <text>event_discharge0_label</text>
+        </name>
+      </transition>
+      <transition id="init_ED out0">
+        <name>
+          <text>init_ED out0_label</text>
+        </name>
+      </transition>
+      <transition id="pend_ED reg0">
+        <name>
+          <text>pend_ED reg0_label</text>
+        </name>
+      </transition>
+      <transition id="pend_admission0">
+        <name>
+          <text>pend_admission0_label</text>
+        </name>
+      </transition>
+      <transition id="pend_death0">
+        <name>
+          <text>pend_death0_label</text>
+        </name>
+      </transition>
+      <transition id="event_admission0">
+        <name>
+          <text>event_admission0_label</text>
+        </name>
+      </transition>
+      <transition id="event_ED reg0">
+        <name>
+          <text>event_ED reg0_label</text>
+        </name>
+      </transition>
+      <transition id="init_ED reg0">
+        <name>
+          <text>init_ED reg0_label</text>
+        </name>
+      </transition>
+      <transition id="pend_ED out0">
+        <name>
+          <text>pend_ED out0_label</text>
+        </name>
+      </transition>
+      <transition id="initpend_ED out0">
+        <name>
+          <text>initpend_ED out0_label</text>
+        </name>
+      </transition>
+      <transition id="init_discharge0">
+        <name>
+          <text>init_discharge0_label</text>
+        </name>
+      </transition>
+      <transition id="initpend_discharge0">
+        <name>
+          <text>initpend_discharge0_label</text>
+        </name>
+      </transition>
+      <transition id="pend_discharge0">
+        <name>
+          <text>pend_discharge0_label</text>
+        </name>
+      </transition>
+      <transition id="event_death0">
+        <name>
+          <text>event_death0_label</text>
+        </name>
+      </transition>
+      <transition id="init_death0">
+        <name>
+          <text>init_death0_label</text>
+        </name>
+      </transition>
+      <transition id="initpend_admission0">
+        <name>
+          <text>initpend_admission0_label</text>
+        </name>
+      </transition>
+      <arc id="140404295722512" source="executed_discharge" target="event_discharge0"/>
+      <arc id="140404295909904" source="executed_ED out" target="event_ED out0"/>
+      <arc id="140404295911440" source="initpend_ED out0" target="executed_ED out"/>
+      <arc id="140404295912464" source="init_discharge0" target="executed_discharge"/>
+      <arc id="140404295916048" source="pending_death" target="event_death0" type="inhibitor"/>
+      <arc id="140404295924752" source="init_admission0" target="executed_admission"/>
+      <arc id="140404295921168" source="pending_ED reg" target="init_ED reg0" type="inhibitor"/>
+      <arc id="140404295827984" source="included_admission" target="pend_admission0"/>
+      <arc id="140404295918608" source="pending_death" target="pend_death0"/>
+      <arc id="140404295913552" source="pending_discharge" target="initpend_discharge0"/>
+      <arc id="140404295917648" source="executed_death" target="initpend_death0" type="inhibitor"/>
+      <arc id="140404295914064" source="pend_discharge0" target="executed_discharge"/>
+      <arc id="140404295918160" source="included_death" target="pend_death0"/>
+      <arc id="140404295722064" source="event_discharge0" target="executed_discharge"/>
+      <arc id="140404295922768" source="pending_ED reg" target="pend_ED reg0"/>
+      <arc id="140404295910992" source="pending_ED out" target="init_ED out0" type="inhibitor"/>
+      <arc id="140404295723088" source="pending_ED out" target="pend_ED out0"/>
+      <arc id="140404295919696" source="included_ED reg" target="event_ED reg0"/>
+      <arc id="140404295923792" source="event_admission0" target="executed_admission"/>
+      <arc id="140404295916624" source="init_death0" target="executed_death"/>
+      <arc id="140404295827600" source="pending_admission" target="initpend_admission0"/>
+      <arc id="140404295909520" source="included_ED out" target="event_ED out0"/>
+      <arc id="140404295910544" source="included_ED out" target="init_ED out0"/>
+      <arc id="140404295913104" source="included_discharge" target="initpend_discharge0"/>
+      <arc id="140404295915664" source="event_death0" target="executed_death"/>
+      <arc id="140404295920272" source="pending_ED reg" target="event_ED reg0" type="inhibitor"/>
+      <arc id="140404295925392" source="included_admission" target="initpend_admission0"/>
+      <arc id="140404295921808" source="executed_ED reg" target="initpend_ED reg0" type="inhibitor"/>
+      <arc id="140404295922320" source="included_ED reg" target="pend_ED reg0"/>
+      <arc id="140404295828112" source="pend_admission0" target="executed_admission"/>
+      <arc id="140404295917776" source="pending_death" target="initpend_death0"/>
+      <arc id="140404295918288" source="pend_death0" target="executed_death"/>
+      <arc id="140404295920848" source="init_ED reg0" target="executed_ED reg"/>
+      <arc id="140404295722192" source="pending_discharge" target="event_discharge0" type="inhibitor"/>
+      <arc id="140404295924944" source="executed_admission" target="init_admission0" type="inhibitor"/>
+      <arc id="140404295722704" source="included_discharge" target="init_discharge0"/>
+      <arc id="140404295911632" source="executed_ED out" target="initpend_ED out0" type="inhibitor"/>
+      <arc id="140404295912144" source="included_ED out" target="pend_ED out0"/>
+      <arc id="140404295910096" source="pending_ED out" target="event_ED out0" type="inhibitor"/>
+      <arc id="140404295912656" source="executed_discharge" target="init_discharge0" type="inhibitor"/>
+      <arc id="140404295920720" source="included_ED reg" target="init_ED reg0"/>
+      <arc id="140404295910672" source="init_ED out0" target="executed_ED out"/>
+      <arc id="140404295919888" source="event_ED reg0" target="executed_ED reg"/>
+      <arc id="140404295923984" source="executed_admission" target="event_admission0"/>
+      <arc id="140404295916816" source="executed_death" target="init_death0" type="inhibitor"/>
+      <arc id="140404295913232" source="initpend_discharge0" target="executed_discharge"/>
+      <arc id="140404295917328" source="included_death" target="initpend_death0"/>
+      <arc id="140404295925520" source="initpend_admission0" target="executed_admission"/>
+      <arc id="140404295921936" source="pending_ED reg" target="initpend_ED reg0"/>
+      <arc id="140404295914256" source="executed_discharge" target="pend_discharge0"/>
+      <arc id="140404295922448" source="pend_ED reg0" target="executed_ED reg"/>
+      <arc id="140404295828432" source="pending_admission" target="pend_admission0"/>
+      <arc id="140404295921488" source="included_ED reg" target="initpend_ED reg0"/>
+      <arc id="140404295925072" source="pending_admission" target="init_admission0" type="inhibitor"/>
+      <arc id="140404295912272" source="pend_ED out0" target="executed_ED out"/>
+      <arc id="140404295722832" source="included_discharge" target="event_discharge0"/>
+      <arc id="140404295909712" source="event_ED out0" target="executed_ED out"/>
+      <arc id="140404295911760" source="pending_ED out" target="initpend_ED out0"/>
+      <arc id="140404295915856" source="executed_death" target="event_death0"/>
+      <arc id="140404295912784" source="pending_discharge" target="init_discharge0" type="inhibitor"/>
+      <arc id="140404295828304" source="executed_admission" target="pend_admission0"/>
+      <arc id="140404295923600" source="included_admission" target="event_admission0"/>
+      <arc id="140404295720848" source="executed_ED out" target="pend_ED out0"/>
+      <arc id="140404295911312" source="included_ED out" target="initpend_ED out0"/>
+      <arc id="140404295924624" source="included_admission" target="init_admission0"/>
+      <arc id="140404295916944" source="pending_death" target="init_death0" type="inhibitor"/>
+      <arc id="140404295921040" source="executed_ED reg" target="init_ED reg0" type="inhibitor"/>
+      <arc id="140404295917456" source="initpend_death0" target="executed_death"/>
+      <arc id="140404295914384" source="pending_discharge" target="pend_discharge0"/>
+      <arc id="140404295918480" source="executed_death" target="pend_death0"/>
+      <arc id="140404295921616" source="initpend_ED reg0" target="executed_ED reg"/>
+      <arc id="140404295925712" source="executed_admission" target="initpend_admission0" type="inhibitor"/>
+      <arc id="140404295913424" source="executed_discharge" target="initpend_discharge0" type="inhibitor"/>
+      <arc id="140404295913936" source="included_discharge" target="pend_discharge0"/>
+      <arc id="140404295922640" source="executed_ED reg" target="pend_ED reg0"/>
+      <arc id="140404295915472" source="included_death" target="event_death0"/>
+      <arc id="140404295910864" source="executed_ED out" target="init_ED out0" type="inhibitor"/>
+      <arc id="140404295920080" source="executed_ED reg" target="event_ED reg0"/>
+      <arc id="140404295924176" source="pending_admission" target="event_admission0" type="inhibitor"/>
+      <arc id="140404295916496" source="included_death" target="init_death0"/>
+    </page>
+  </net>
+</pnml>

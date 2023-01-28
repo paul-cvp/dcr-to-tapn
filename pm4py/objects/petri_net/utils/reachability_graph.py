@@ -77,7 +77,7 @@ def marking_flow_petri(net, im, return_eventually_enabled=False, parameters=None
     active = [im]
     # do not put in active if it was not seen before
     seen_before = set()
-    print(type(im))
+    # print(type(im))
     seen_before.add(hash(im))
     while active:
         # print(f'[i] len seen before: {len(seen_before)} len active: {len(active)}')

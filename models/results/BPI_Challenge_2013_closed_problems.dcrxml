@@ -1,0 +1,48 @@
+<dcrgraph title="BPI_Challenge_2013_closed_problems.xes">
+  <specification>
+    <resources>
+      <events>
+        <event id="Queued"/>
+        <event id="Accepted"/>
+        <event id="Unmatched"/>
+        <event id="Completed"/>
+      </events>
+      <labels>
+        <label id="Queued"/>
+        <label id="Accepted"/>
+        <label id="Unmatched"/>
+        <label id="Completed"/>
+      </labels>
+      <labelMappings>
+        <labelMapping eventId="Queued" labelId="Queued"/>
+        <labelMapping eventId="Accepted" labelId="Accepted"/>
+        <labelMapping eventId="Unmatched" labelId="Unmatched"/>
+        <labelMapping eventId="Completed" labelId="Completed"/>
+      </labelMappings>
+    </resources>
+    <constraints>
+      <conditions/>
+      <responses>
+        <response sourceId="Queued" targetId="Accepted"/>
+        <response sourceId="Accepted" targetId="Completed"/>
+        <response sourceId="Unmatched" targetId="Completed"/>
+      </responses>
+      <excludes>
+        <exclude sourceId="Unmatched" targetId="Unmatched"/>
+      </excludes>
+      <includes/>
+    </constraints>
+  </specification>
+  <runtime>
+    <marking>
+      <executed/>
+      <included>
+        <event id="Queued"/>
+        <event id="Accepted"/>
+        <event id="Unmatched"/>
+        <event id="Completed"/>
+      </included>
+      <pendingResponses/>
+    </marking>
+  </runtime>
+</dcrgraph>

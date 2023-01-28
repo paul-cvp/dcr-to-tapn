@@ -118,11 +118,12 @@ def is_enabled(t, pn, m):
                                                         a.properties[properties.ARCTYPE] == "inhibitor"):
                 if m[a.source] > 0:
                     return False
-                elif a.properties[properties.ARCTYPE] == properties.TRANSPORT_ARC:
-                    return False # Cannot be both inhibitor and transport
-            elif properties.ARCTYPE in a.properties and a.properties[properties.ARCTYPE] == properties.TRANSPORT_ARC:
-                m[a.source]
-
+                # elif a.properties[properties.ARCTYPE] == properties.TRANSPORT_ARC:
+                #     return False # Cannot be both inhibitor and transport
+            # elif properties.ARCTYPE in a.properties and a.properties[properties.ARCTYPE] == properties.TRANSPORT_ARC:
+            #     #TODO fix this (now we don't have transport arcs)
+            #     m[a.source]
+            #     pass
             elif m[a.source] < a.weight:
                 return False
     # if nothing is violated than it is enabled
@@ -140,7 +141,8 @@ def execute(t, pn, m):
             if m_out[a.source] == 0:
                 del m_out[a.source]
         elif properties.ARCTYPE in a.properties and (a.properties[properties.ARCTYPE] == properties.INHIBITOR_ARC or
-                                                    a.properties[properties.ARCTYPE] == "tapnInhibitor"):
+                                                    a.properties[properties.ARCTYPE] == "tapnInhibitor" or
+                                                        a.properties[properties.ARCTYPE] == "inhibitor"):
             pass
         else:
             m_out[a.source] -= a.weight
@@ -164,7 +166,8 @@ def weak_execute(t, m):
             if m_out[a.source] <= 0:
                 del m_out[a.source]
         elif properties.ARCTYPE in a.properties and (a.properties[properties.ARCTYPE] == properties.INHIBITOR_ARC or
-                                                    a.properties[properties.ARCTYPE] == "tapnInhibitor"):
+                                                    a.properties[properties.ARCTYPE] == "tapnInhibitor" or
+                                                        a.properties[properties.ARCTYPE] == "inhibitor"):
             pass
         else:
             m_out[a.source] -= a.weight

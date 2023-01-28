@@ -1,0 +1,184 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<pnml>
+  <net id="net1" type="http://www.pnml.org/version-2009/grammar/pnml">
+    <page id="n0">
+      <place id="included_O_Create Offer">
+        <name>
+          <text>included_O_Create Offer</text>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+      </place>
+      <place id="included_O_Refused">
+        <name>
+          <text>included_O_Refused</text>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+      </place>
+      <place id="executed_O_Create Offer">
+        <name>
+          <text>executed_O_Create Offer</text>
+        </name>
+      </place>
+      <place id="included_O_Sent (online only)">
+        <name>
+          <text>included_O_Sent (online only)</text>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+      </place>
+      <place id="included_O_Sent (mail and online)">
+        <name>
+          <text>included_O_Sent (mail and online)</text>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+      </place>
+      <place id="executed_included_O_Returned">
+        <name>
+          <text>executed_included_O_Returned</text>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+      </place>
+      <place id="included_O_Created">
+        <name>
+          <text>included_O_Created</text>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+      </place>
+      <place id="pending_O_Created">
+        <name>
+          <text>pending_O_Created</text>
+        </name>
+      </place>
+      <place id="executed_O_Created">
+        <name>
+          <text>executed_O_Created</text>
+        </name>
+      </place>
+      <place id="included_O_Cancelled">
+        <name>
+          <text>included_O_Cancelled</text>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+      </place>
+      <place id="included_O_Accepted">
+        <name>
+          <text>included_O_Accepted</text>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+      </place>
+      <transition id="initpend_O_Created11">
+        <name>
+          <text>initpend_O_Created11_label</text>
+        </name>
+      </transition>
+      <transition id="init_O_Create Offer0">
+        <name>
+          <text>init_O_Create Offer0_label</text>
+        </name>
+      </transition>
+      <transition id="event_O_Refused11">
+        <name>
+          <text>event_O_Refused11_label</text>
+        </name>
+      </transition>
+      <transition id="initpend_O_Created8">
+        <name>
+          <text>initpend_O_Created8_label</text>
+        </name>
+      </transition>
+      <transition id="event_O_Cancelled11">
+        <name>
+          <text>event_O_Cancelled11_label</text>
+        </name>
+      </transition>
+      <transition id="initpend_O_Created10">
+        <name>
+          <text>initpend_O_Created10_label</text>
+        </name>
+      </transition>
+      <transition id="initpend_O_Created9">
+        <name>
+          <text>initpend_O_Created9_label</text>
+        </name>
+      </transition>
+      <arc id="140402954919952" source="initpend_O_Created9" target="executed_O_Create Offer"/>
+      <arc id="140403052650576" source="init_O_Create Offer0" target="executed_O_Create Offer"/>
+      <arc id="140402954920080" source="executed_O_Create Offer" target="initpend_O_Created9"/>
+      <arc id="140403052650704" source="executed_O_Create Offer" target="init_O_Create Offer0" type="inhibitor"/>
+      <arc id="140402878694352" source="pending_O_Created" target="init_O_Create Offer0" type="inhibitor"/>
+      <arc id="140402954926160" source="included_O_Sent (online only)" target="initpend_O_Created10"/>
+      <arc id="140402954912528" source="included_O_Create Offer" target="initpend_O_Created8" type="inhibitor"/>
+      <arc id="140402954912592" source="included_O_Sent (online only)" target="initpend_O_Created8"/>
+      <arc id="140402954912720" source="included_O_Sent (mail and online)" target="initpend_O_Created8"/>
+      <arc id="140402954912848" source="initpend_O_Created8" target="included_O_Sent (online only)"/>
+      <arc id="140402954912976" source="initpend_O_Created8" target="included_O_Sent (mail and online)"/>
+      <arc id="140402954962192" source="included_O_Created" target="initpend_O_Created11"/>
+      <arc id="140402954913168" source="initpend_O_Created8" target="executed_O_Create Offer"/>
+      <arc id="140402954962320" source="initpend_O_Created11" target="executed_O_Created"/>
+      <arc id="140402954962448" source="executed_O_Created" target="initpend_O_Created11" type="inhibitor"/>
+      <arc id="140402954913296" source="executed_O_Create Offer" target="initpend_O_Created8"/>
+      <arc id="140402954962576" source="pending_O_Created" target="initpend_O_Created11"/>
+      <arc id="140402954965520" source="included_O_Sent (mail and online)" target="initpend_O_Created11"/>
+      <arc id="140402954922832" source="initpend_O_Created10" target="executed_O_Created"/>
+      <arc id="140402954922960" source="executed_O_Created" target="initpend_O_Created10" type="inhibitor"/>
+      <arc id="140402954923088" source="pending_O_Created" target="initpend_O_Created10"/>
+      <arc id="140402954876368" source="included_O_Created" target="initpend_O_Created8"/>
+      <arc id="140402954915984" source="included_O_Created" target="initpend_O_Created9"/>
+      <arc id="140402954916112" source="initpend_O_Created9" target="executed_O_Created"/>
+      <arc id="140402954916240" source="executed_O_Created" target="initpend_O_Created9" type="inhibitor"/>
+      <arc id="140402954965456" source="included_O_Create Offer" target="initpend_O_Created11" type="inhibitor"/>
+      <arc id="140402954916368" source="pending_O_Created" target="initpend_O_Created9"/>
+      <arc id="140402954965648" source="included_O_Sent (online only)" target="initpend_O_Created11"/>
+      <arc id="140402954982096" source="included_O_Refused" target="event_O_Refused11"/>
+      <arc id="140402954965776" source="initpend_O_Created11" target="included_O_Sent (online only)"/>
+      <arc id="140402954982224" source="included_O_Created" target="event_O_Refused11" type="inhibitor"/>
+      <arc id="140402954965904" source="initpend_O_Created11" target="included_O_Sent (mail and online)"/>
+      <arc id="140402954982352" source="included_O_Cancelled" target="event_O_Refused11"/>
+      <arc id="140402954966096" source="initpend_O_Created11" target="executed_O_Create Offer"/>
+      <arc id="140402954982480" source="included_O_Accepted" target="event_O_Refused11"/>
+      <arc id="140402954966224" source="executed_O_Create Offer" target="initpend_O_Created11"/>
+      <arc id="140402954982672" source="event_O_Refused11" target="executed_O_Created"/>
+      <arc id="140402954982800" source="executed_O_Created" target="event_O_Refused11"/>
+      <arc id="140402954876496" source="initpend_O_Created8" target="executed_O_Created"/>
+      <arc id="140402954876624" source="executed_O_Created" target="initpend_O_Created8" type="inhibitor"/>
+      <arc id="140402954876752" source="pending_O_Created" target="initpend_O_Created8"/>
+      <arc id="140402954925968" source="included_O_Create Offer" target="initpend_O_Created10" type="inhibitor"/>
+      <arc id="140402954926032" source="included_O_Sent (mail and online)" target="initpend_O_Created10"/>
+      <arc id="140402954926288" source="initpend_O_Created10" target="included_O_Sent (mail and online)"/>
+      <arc id="140402954926416" source="initpend_O_Created10" target="included_O_Sent (online only)"/>
+      <arc id="140402878693968" source="init_O_Create Offer0" target="included_O_Created"/>
+      <arc id="140402954926608" source="initpend_O_Created10" target="executed_O_Create Offer"/>
+      <arc id="140402956712528" source="included_O_Cancelled" target="event_O_Cancelled11"/>
+      <arc id="140402954926736" source="executed_O_Create Offer" target="initpend_O_Created10"/>
+      <arc id="140402956712656" source="included_O_Created" target="event_O_Cancelled11" type="inhibitor"/>
+      <arc id="140402956712784" source="included_O_Accepted" target="event_O_Cancelled11"/>
+      <arc id="140402956712912" source="included_O_Refused" target="event_O_Cancelled11"/>
+      <arc id="140402878694096" source="included_O_Created" target="init_O_Create Offer0"/>
+      <arc id="140402956713104" source="event_O_Cancelled11" target="executed_O_Created"/>
+      <arc id="140402956713232" source="executed_O_Created" target="event_O_Cancelled11"/>
+      <arc id="140402954922704" source="included_O_Created" target="initpend_O_Created10"/>
+      <arc id="140402954919312" source="included_O_Create Offer" target="initpend_O_Created9" type="inhibitor"/>
+      <arc id="140402954919376" source="included_O_Sent (online only)" target="initpend_O_Created9"/>
+      <arc id="140402954919504" source="included_O_Sent (mail and online)" target="initpend_O_Created9"/>
+      <arc id="140402878694224" source="init_O_Create Offer0" target="pending_O_Created"/>
+      <arc id="140402954919632" source="initpend_O_Created9" target="included_O_Sent (mail and online)"/>
+      <arc id="140402954919760" source="initpend_O_Created9" target="included_O_Sent (online only)"/>
+      <arc id="140403052650448" source="included_O_Create Offer" target="init_O_Create Offer0"/>
+    </page>
+  </net>
+</pnml>

@@ -1,0 +1,297 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<pnml>
+  <net id="net1" type="http://www.pnml.org/version-2009/grammar/pnml">
+    <page id="n0">
+      <place id="executed_Insert Date Appeal to Prefecture">
+        <name>
+          <text>executed_Insert Date Appeal to Prefecture</text>
+        </name>
+      </place>
+      <place id="executed_Send Fine">
+        <name>
+          <text>executed_Send Fine</text>
+        </name>
+      </place>
+      <place id="pending_included_Appeal to Judge">
+        <name>
+          <text>pending_included_Appeal to Judge</text>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+      </place>
+      <place id="pending_included_Notify Result Appeal to Offender">
+        <name>
+          <text>pending_included_Notify Result Appeal to Offender</text>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+      </place>
+      <place id="executed_included_Send for Credit Collection">
+        <name>
+          <text>executed_included_Send for Credit Collection</text>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+      </place>
+      <place id="executed_Create Fine">
+        <name>
+          <text>executed_Create Fine</text>
+        </name>
+      </place>
+      <place id="executed_included_Payment">
+        <name>
+          <text>executed_included_Payment</text>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+      </place>
+      <place id="executed_Receive Result Appeal from Prefecture">
+        <name>
+          <text>executed_Receive Result Appeal from Prefecture</text>
+        </name>
+      </place>
+      <place id="pending_included_Insert Date Appeal to Prefecture">
+        <name>
+          <text>pending_included_Insert Date Appeal to Prefecture</text>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+      </place>
+      <place id="executed_Appeal to Judge">
+        <name>
+          <text>executed_Appeal to Judge</text>
+        </name>
+      </place>
+      <place id="included_Send Fine">
+        <name>
+          <text>included_Send Fine</text>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+      </place>
+      <place id="executed_Insert Fine Notification">
+        <name>
+          <text>executed_Insert Fine Notification</text>
+        </name>
+      </place>
+      <place id="included_Create Fine">
+        <name>
+          <text>included_Create Fine</text>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+      </place>
+      <place id="executed_Send Appeal to Prefecture">
+        <name>
+          <text>executed_Send Appeal to Prefecture</text>
+        </name>
+      </place>
+      <place id="pending_included_Receive Result Appeal from Prefecture">
+        <name>
+          <text>pending_included_Receive Result Appeal from Prefecture</text>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+      </place>
+      <place id="pending_included_Send Appeal to Prefecture">
+        <name>
+          <text>pending_included_Send Appeal to Prefecture</text>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+      </place>
+      <place id="included_Insert Fine Notification">
+        <name>
+          <text>included_Insert Fine Notification</text>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+      </place>
+      <place id="pending_included_Add penalty">
+        <name>
+          <text>pending_included_Add penalty</text>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+      </place>
+      <place id="executed_Add penalty">
+        <name>
+          <text>executed_Add penalty</text>
+        </name>
+      </place>
+      <place id="executed_Notify Result Appeal to Offender">
+        <name>
+          <text>executed_Notify Result Appeal to Offender</text>
+        </name>
+      </place>
+      <transition id="initpend_Add penalty2">
+        <name>
+          <text>initpend_Add penalty2_label</text>
+        </name>
+      </transition>
+      <transition id="init_Send Appeal to Prefecture2">
+        <name>
+          <text>init_Send Appeal to Prefecture2_label</text>
+        </name>
+      </transition>
+      <transition id="event_Payment2">
+        <name>
+          <text>event_Payment2_label</text>
+        </name>
+      </transition>
+      <transition id="init_Create Fine0">
+        <name>
+          <text>init_Create Fine0_label</text>
+        </name>
+      </transition>
+      <transition id="init_Payment2">
+        <name>
+          <text>init_Payment2_label</text>
+        </name>
+      </transition>
+      <transition id="init_Appeal to Judge2">
+        <name>
+          <text>init_Appeal to Judge2_label</text>
+        </name>
+      </transition>
+      <transition id="init_Notify Result Appeal to Offender2">
+        <name>
+          <text>init_Notify Result Appeal to Offender2_label</text>
+        </name>
+      </transition>
+      <transition id="init_Insert Fine Notification9">
+        <name>
+          <text>init_Insert Fine Notification9_label</text>
+        </name>
+      </transition>
+      <transition id="init_Insert Fine Notification10">
+        <name>
+          <text>init_Insert Fine Notification10_label</text>
+        </name>
+      </transition>
+      <transition id="init_Insert Fine Notification8">
+        <name>
+          <text>init_Insert Fine Notification8_label</text>
+        </name>
+      </transition>
+      <transition id="init_Insert Fine Notification11">
+        <name>
+          <text>init_Insert Fine Notification11_label</text>
+        </name>
+      </transition>
+      <transition id="init_Send Fine2">
+        <name>
+          <text>init_Send Fine2_label</text>
+        </name>
+      </transition>
+      <transition id="init_Insert Date Appeal to Prefecture2">
+        <name>
+          <text>init_Insert Date Appeal to Prefecture2_label</text>
+        </name>
+      </transition>
+      <transition id="init_Receive Result Appeal from Prefecture2">
+        <name>
+          <text>init_Receive Result Appeal from Prefecture2_label</text>
+        </name>
+      </transition>
+      <arc id="140397059432464" source="init_Send Appeal to Prefecture2" target="executed_Create Fine"/>
+      <arc id="140401388920912" source="executed_Insert Fine Notification" target="init_Insert Fine Notification9" type="inhibitor"/>
+      <arc id="140401387610192" source="pending_included_Insert Date Appeal to Prefecture" target="init_Insert Date Appeal to Prefecture2"/>
+      <arc id="140401389027472" source="executed_Create Fine" target="init_Appeal to Judge2"/>
+      <arc id="140401389003216" source="executed_Send Fine" target="init_Send Fine2" type="inhibitor"/>
+      <arc id="140397059432912" source="included_Create Fine" target="init_Send Appeal to Prefecture2" type="inhibitor"/>
+      <arc id="140401388900752" source="init_Insert Fine Notification11" target="pending_included_Add penalty"/>
+      <arc id="140401388659792" source="executed_Create Fine" target="event_Payment2"/>
+      <arc id="140401388869840" source="initpend_Add penalty2" target="executed_Add penalty"/>
+      <arc id="140401388913808" source="executed_Insert Fine Notification" target="init_Insert Fine Notification10" type="inhibitor"/>
+      <arc id="140401389003664" source="init_Send Fine2" target="executed_Send Fine"/>
+      <arc id="140401389085584" source="init_Receive Result Appeal from Prefecture2" target="executed_Receive Result Appeal from Prefecture"/>
+      <arc id="140401389085712" source="pending_included_Receive Result Appeal from Prefecture" target="init_Receive Result Appeal from Prefecture2"/>
+      <arc id="140401388663120" source="executed_included_Payment" target="event_Payment2"/>
+      <arc id="140401389003856" source="included_Send Fine" target="init_Send Fine2"/>
+      <arc id="140401388905680" source="included_Send Fine" target="init_Insert Fine Notification11" type="inhibitor"/>
+      <arc id="140401388913936" source="included_Insert Fine Notification" target="init_Insert Fine Notification10"/>
+      <arc id="140401389029008" source="init_Appeal to Judge2" target="executed_Create Fine"/>
+      <arc id="140401389029136" source="included_Create Fine" target="init_Appeal to Judge2" type="inhibitor"/>
+      <arc id="140401388906384" source="pending_included_Add penalty" target="init_Insert Fine Notification11"/>
+      <arc id="140401388866832" source="executed_Add penalty" target="initpend_Add penalty2" type="inhibitor"/>
+      <arc id="140397059434512" source="executed_Create Fine" target="init_Send Appeal to Prefecture2"/>
+      <arc id="140401388660112" source="event_Payment2" target="executed_Create Fine"/>
+      <arc id="140401388906960" source="init_Insert Fine Notification11" target="executed_Insert Fine Notification"/>
+      <arc id="140401389030096" source="init_Appeal to Judge2" target="executed_Appeal to Judge"/>
+      <arc id="140401388656976" source="included_Create Fine" target="event_Payment2" type="inhibitor"/>
+      <arc id="140401388660240" source="init_Payment2" target="executed_Create Fine"/>
+      <arc id="140397059435472" source="pending_included_Send Appeal to Prefecture" target="init_Send Appeal to Prefecture2"/>
+      <arc id="140401389038672" source="init_Notify Result Appeal to Offender2" target="executed_Insert Fine Notification"/>
+      <arc id="140401388915792" source="init_Insert Fine Notification9" target="pending_included_Add penalty"/>
+      <arc id="140401387605136" source="executed_Create Fine" target="init_Insert Date Appeal to Prefecture2"/>
+      <arc id="140401389038800" source="included_Insert Fine Notification" target="init_Notify Result Appeal to Offender2" type="inhibitor"/>
+      <arc id="140401388865488" source="pending_included_Add penalty" target="initpend_Add penalty2"/>
+      <arc id="140401389038928" source="executed_Insert Fine Notification" target="init_Notify Result Appeal to Offender2"/>
+      <arc id="140401388661968" source="executed_included_Payment" target="init_Payment2"/>
+      <arc id="140401389080016" source="init_Receive Result Appeal from Prefecture2" target="executed_Send Fine"/>
+      <arc id="140401388873680" source="included_Insert Fine Notification" target="initpend_Add penalty2" type="inhibitor"/>
+      <arc id="140401388912784" source="init_Insert Fine Notification10" target="executed_Insert Fine Notification"/>
+      <arc id="140401389031248" source="pending_included_Appeal to Judge" target="init_Appeal to Judge2"/>
+      <arc id="140401388916816" source="executed_Send Fine" target="init_Insert Fine Notification9"/>
+      <arc id="140401388907984" source="executed_Insert Fine Notification" target="init_Insert Fine Notification11" type="inhibitor"/>
+      <arc id="140401388916944" source="init_Insert Fine Notification9" target="executed_Send Fine"/>
+      <arc id="140401388925136" source="included_Send Fine" target="init_Insert Fine Notification8" type="inhibitor"/>
+      <arc id="140401388662160" source="init_Payment2" target="executed_included_Payment"/>
+      <arc id="140401387606352" source="init_Insert Date Appeal to Prefecture2" target="executed_Create Fine"/>
+      <arc id="140401388917136" source="pending_included_Add penalty" target="init_Insert Fine Notification9"/>
+      <arc id="140401388925328" source="pending_included_Add penalty" target="init_Insert Fine Notification8"/>
+      <arc id="140401388925520" source="init_Insert Fine Notification8" target="pending_included_Add penalty"/>
+      <arc id="140401388657360" source="included_Create Fine" target="init_Payment2" type="inhibitor"/>
+      <arc id="140401387607056" source="included_Create Fine" target="init_Insert Date Appeal to Prefecture2" type="inhibitor"/>
+      <arc id="140401388908176" source="included_Insert Fine Notification" target="init_Insert Fine Notification11"/>
+      <arc id="140401388917840" source="included_Send Fine" target="init_Insert Fine Notification9" type="inhibitor"/>
+      <arc id="140401388909968" source="included_Send Fine" target="init_Insert Fine Notification10" type="inhibitor"/>
+      <arc id="140401389041168" source="executed_Notify Result Appeal to Offender" target="init_Notify Result Appeal to Offender2" type="inhibitor"/>
+      <arc id="140401389000208" source="executed_Create Fine" target="init_Send Fine2"/>
+      <arc id="140401388921296" source="init_Insert Fine Notification9" target="executed_Insert Fine Notification"/>
+      <arc id="140401388662416" source="event_Payment2" target="executed_included_Payment"/>
+      <arc id="140401388926544" source="init_Insert Fine Notification8" target="executed_Send Fine"/>
+      <arc id="140401389000336" source="init_Send Fine2" target="executed_Create Fine"/>
+      <arc id="140401389082320" source="included_Send Fine" target="init_Receive Result Appeal from Prefecture2" type="inhibitor"/>
+      <arc id="140401389000464" source="included_Create Fine" target="init_Send Fine2" type="inhibitor"/>
+      <arc id="140401388918096" source="included_Insert Fine Notification" target="init_Insert Fine Notification9"/>
+      <arc id="140401388877392" source="executed_Insert Fine Notification" target="initpend_Add penalty2"/>
+      <arc id="140401388910480" source="init_Insert Fine Notification10" target="executed_Send Fine"/>
+      <arc id="140401389082576" source="executed_Send Fine" target="init_Receive Result Appeal from Prefecture2"/>
+      <arc id="140401389085840" source="executed_Receive Result Appeal from Prefecture" target="init_Receive Result Appeal from Prefecture2" type="inhibitor"/>
+      <arc id="140396137617488" source="included_Create Fine" target="init_Create Fine0"/>
+      <arc id="140401388659280" source="executed_Create Fine" target="init_Payment2"/>
+      <arc id="140401388910032" source="executed_Send Fine" target="init_Insert Fine Notification10"/>
+      <arc id="140396137617616" source="executed_Create Fine" target="init_Create Fine0" type="inhibitor"/>
+      <arc id="140401388927184" source="executed_Send Fine" target="init_Insert Fine Notification8"/>
+      <arc id="140401388910864" source="init_Insert Fine Notification10" target="pending_included_Add penalty"/>
+      <arc id="140397059438928" source="executed_Send Appeal to Prefecture" target="init_Send Appeal to Prefecture2" type="inhibitor"/>
+      <arc id="140401388878160" source="initpend_Add penalty2" target="executed_Insert Fine Notification"/>
+      <arc id="140401389042448" source="init_Notify Result Appeal to Offender2" target="executed_Notify Result Appeal to Offender"/>
+      <arc id="140401389042576" source="pending_included_Notify Result Appeal to Offender" target="init_Notify Result Appeal to Offender2"/>
+      <arc id="140401388927888" source="executed_Insert Fine Notification" target="init_Insert Fine Notification8" type="inhibitor"/>
+      <arc id="140401388928016" source="init_Insert Fine Notification8" target="executed_Insert Fine Notification"/>
+      <arc id="140401388903696" source="init_Insert Fine Notification11" target="executed_Send Fine"/>
+      <arc id="140401388928208" source="included_Insert Fine Notification" target="init_Insert Fine Notification8"/>
+      <arc id="140401388911888" source="pending_included_Add penalty" target="init_Insert Fine Notification10"/>
+      <arc id="140401387609488" source="init_Insert Date Appeal to Prefecture2" target="executed_Insert Date Appeal to Prefecture"/>
+      <arc id="140401387609360" source="executed_Insert Date Appeal to Prefecture" target="init_Insert Date Appeal to Prefecture2" type="inhibitor"/>
+      <arc id="140401388903824" source="executed_Send Fine" target="init_Insert Fine Notification11"/>
+      <arc id="140397059440336" source="init_Send Appeal to Prefecture2" target="executed_Send Appeal to Prefecture"/>
+      <arc id="140401389032464" source="executed_Appeal to Judge" target="init_Appeal to Judge2" type="inhibitor"/>
+      <arc id="140396137617360" source="init_Create Fine0" target="executed_Create Fine"/>
+    </page>
+  </net>
+</pnml>
