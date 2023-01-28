@@ -163,6 +163,7 @@ cython_debug/
 models/*
 !models/dcrxml
 !models/results
+!models/analysis/optimization_analysis.csv
 models/dcrxml/*
 !models/dcrxml/eshop.xml
 !models/eshop_dcr_analysis.pnml
