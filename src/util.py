@@ -1,14 +1,6 @@
 from pm4py.objects.petri_net.obj import *
 from pm4py.objects.petri_net.utils import petri_utils as pn_utils
-
-from enum import Enum
-class Relations(Enum):
-    I = 'includesTo'
-    E = 'excludesTo'
-    R = 'responseTo'
-    N = 'noResponseTo'
-    C = 'conditionsFor'
-    M = 'milestonesFor'
+from pm4py.objects.dcr.obj import Relations
 def map_existing_transitions_of_copy_0(delta, copy_0, t, tapn) -> (PetriNet, PetriNet.Transition):
     trans = copy_0[delta]
     # if trans in tapn.transitions: # since this is a copy this cannot be checked here. trust me bro

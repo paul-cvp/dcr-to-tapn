@@ -10,22 +10,6 @@
           <text>1</text>
         </initialMarking>
       </place>
-      <place id="included_discharge">
-        <name>
-          <text>included_discharge</text>
-        </name>
-        <initialMarking>
-          <text>1</text>
-        </initialMarking>
-      </place>
-      <place id="included_ED out">
-        <name>
-          <text>included_ED out</text>
-        </name>
-        <initialMarking>
-          <text>1</text>
-        </initialMarking>
-      </place>
       <place id="included_death">
         <name>
           <text>included_death</text>
@@ -34,9 +18,25 @@
           <text>1</text>
         </initialMarking>
       </place>
-      <place id="included_ED reg">
+      <place id="included_discharge">
         <name>
-          <text>included_ED reg</text>
+          <text>included_discharge</text>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+      </place>
+      <place id="included_EDout">
+        <name>
+          <text>included_EDout</text>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+      </place>
+      <place id="included_EDreg">
+        <name>
+          <text>included_EDreg</text>
         </name>
         <initialMarking>
           <text>1</text>
@@ -47,14 +47,9 @@
           <text>event_admission0_label</text>
         </name>
       </transition>
-      <transition id="event_ED out0">
+      <transition id="event_EDout0">
         <name>
-          <text>event_ED out0_label</text>
-        </name>
-      </transition>
-      <transition id="event_discharge0">
-        <name>
-          <text>event_discharge0_label</text>
+          <text>event_EDout0_label</text>
         </name>
       </transition>
       <transition id="event_death0">
@@ -62,16 +57,21 @@
           <text>event_death0_label</text>
         </name>
       </transition>
-      <transition id="event_ED reg0">
+      <transition id="event_EDreg0">
         <name>
-          <text>event_ED reg0_label</text>
+          <text>event_EDreg0_label</text>
         </name>
       </transition>
-      <arc id="140402732284048" source="included_admission" target="event_admission0"/>
-      <arc id="140402732284688" source="included_ED out" target="event_ED out0"/>
-      <arc id="140402732285840" source="included_death" target="event_death0"/>
-      <arc id="140402732319312" source="included_ED reg" target="event_ED reg0"/>
-      <arc id="140402732285200" source="included_discharge" target="event_discharge0"/>
+      <transition id="event_discharge0">
+        <name>
+          <text>event_discharge0_label</text>
+        </name>
+      </transition>
+      <arc id="140114744021200" source="included_admission" target="event_admission0"/>
+      <arc id="140114744022800" source="included_EDout" target="event_EDout0"/>
+      <arc id="140114744024976" source="included_discharge" target="event_discharge0"/>
+      <arc id="140114744023568" source="included_death" target="event_death0"/>
+      <arc id="140114744024336" source="included_EDreg" target="event_EDreg0"/>
     </page>
   </net>
 </pnml>

@@ -2,6 +2,11 @@
 <pnml>
   <net id="net1" type="http://www.pnml.org/version-2009/grammar/pnml">
     <page id="n0">
+      <place id="pending_Accepted">
+        <name>
+          <text>pending_Accepted</text>
+        </name>
+      </place>
       <place id="pending_Completed">
         <name>
           <text>pending_Completed</text>
@@ -15,11 +20,21 @@
           <text>1</text>
         </initialMarking>
       </place>
-      <place id="pending_Accepted">
+      <transition id="event_Accepted0">
         <name>
-          <text>pending_Accepted</text>
+          <text>event_Accepted0_label</text>
         </name>
-      </place>
+      </transition>
+      <transition id="pend_Completed0">
+        <name>
+          <text>pend_Completed0_label</text>
+        </name>
+      </transition>
+      <transition id="pend_Accepted0">
+        <name>
+          <text>pend_Accepted0_label</text>
+        </name>
+      </transition>
       <transition id="event_Queued0">
         <name>
           <text>event_Queued0_label</text>
@@ -30,24 +45,9 @@
           <text>event_Completed0_label</text>
         </name>
       </transition>
-      <transition id="pend_Completed0">
-        <name>
-          <text>pend_Completed0_label</text>
-        </name>
-      </transition>
       <transition id="event_Unmatched0">
         <name>
           <text>event_Unmatched0_label</text>
-        </name>
-      </transition>
-      <transition id="event_Accepted0">
-        <name>
-          <text>event_Accepted0_label</text>
-        </name>
-      </transition>
-      <transition id="pend_Accepted0">
-        <name>
-          <text>pend_Accepted0_label</text>
         </name>
       </transition>
       <transition id="event_Queued1">
@@ -70,30 +70,30 @@
           <text>event_Unmatched1_label</text>
         </name>
       </transition>
-      <arc id="140402551566160" source="pending_Completed" target="event_Unmatched0" type="inhibitor"/>
-      <arc id="140402551564816" source="pending_Completed" target="event_Accepted0" type="inhibitor"/>
-      <arc id="140402551563920" source="pending_Accepted" target="pend_Accepted1"/>
-      <arc id="140402551564944" source="pend_Accepted0" target="pending_Completed"/>
-      <arc id="140402551564048" source="event_Accepted1" target="pending_Completed"/>
-      <arc id="140402551564176" source="pending_Completed" target="event_Accepted1"/>
-      <arc id="140402551562640" source="event_Queued1" target="pending_Accepted"/>
-      <arc id="140402551562768" source="pending_Accepted" target="event_Queued1"/>
-      <arc id="140402551562896" source="event_Queued0" target="pending_Accepted"/>
-      <arc id="140402551564304" source="pend_Accepted1" target="pending_Completed"/>
-      <arc id="140402551565840" source="pending_Completed" target="event_Unmatched1"/>
-      <arc id="140402551565968" source="event_Unmatched0" target="pending_Completed"/>
-      <arc id="140402551565136" source="pending_Completed" target="pend_Accepted0" type="inhibitor"/>
-      <arc id="140402604365008" source="pending_Completed" target="event_Completed0" type="inhibitor"/>
-      <arc id="140402604365392" source="pending_Completed" target="pend_Completed0"/>
-      <arc id="140402604366928" source="pending_Accepted" target="pend_Accepted0"/>
-      <arc id="140402604365904" source="included_Unmatched" target="event_Unmatched0"/>
-      <arc id="140402604366544" source="pending_Accepted" target="event_Accepted0" type="inhibitor"/>
-      <arc id="140402551563088" source="pending_Accepted" target="event_Queued0" type="inhibitor"/>
-      <arc id="140402551563472" source="pending_Accepted" target="event_Accepted1" type="inhibitor"/>
-      <arc id="140402551564624" source="event_Accepted0" target="pending_Completed"/>
-      <arc id="140402551564496" source="pending_Completed" target="pend_Accepted1"/>
-      <arc id="140402551565520" source="included_Unmatched" target="event_Unmatched1"/>
-      <arc id="140402551565648" source="event_Unmatched1" target="pending_Completed"/>
+      <arc id="140114873130832" source="event_Unmatched1" target="pending_Completed"/>
+      <arc id="140114744019728" source="pending_Completed" target="pend_Accepted1"/>
+      <arc id="140114744021776" source="pending_Completed" target="event_Accepted0" type="inhibitor"/>
+      <arc id="140114744029200" source="pending_Accepted" target="event_Accepted0" type="inhibitor"/>
+      <arc id="140114744031248" source="pending_Completed" target="pend_Completed0"/>
+      <arc id="140114744029840" source="pending_Accepted" target="pend_Accepted0"/>
+      <arc id="140114744030608" source="pending_Completed" target="event_Completed0" type="inhibitor"/>
+      <arc id="140114752251024" source="pending_Accepted" target="event_Queued1"/>
+      <arc id="140114873133840" source="pending_Completed" target="event_Unmatched1"/>
+      <arc id="140114873131152" source="event_Unmatched0" target="pending_Completed"/>
+      <arc id="140114744021328" source="event_Accepted0" target="pending_Completed"/>
+      <arc id="140114873131472" source="pending_Completed" target="event_Unmatched0" type="inhibitor"/>
+      <arc id="140114873136336" source="included_Unmatched" target="event_Unmatched1"/>
+      <arc id="140114744020560" source="pending_Completed" target="event_Accepted1"/>
+      <arc id="140114744021584" source="pending_Completed" target="pend_Accepted0" type="inhibitor"/>
+      <arc id="140114744019664" source="pend_Accepted0" target="pending_Completed"/>
+      <arc id="140114744019920" source="pend_Accepted1" target="pending_Completed"/>
+      <arc id="140114744032336" source="included_Unmatched" target="event_Unmatched0"/>
+      <arc id="140114873223248" source="event_Queued1" target="pending_Accepted"/>
+      <arc id="140114752250960" source="event_Queued0" target="pending_Accepted"/>
+      <arc id="140114872902864" source="pending_Accepted" target="event_Queued0" type="inhibitor"/>
+      <arc id="140114744024656" source="pending_Accepted" target="event_Accepted1" type="inhibitor"/>
+      <arc id="140114744022096" source="event_Accepted1" target="pending_Completed"/>
+      <arc id="140114744020432" source="pending_Accepted" target="pend_Accepted1"/>
     </page>
   </net>
 </pnml>

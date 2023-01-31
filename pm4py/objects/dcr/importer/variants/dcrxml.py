@@ -1,6 +1,13 @@
 from pm4py.util import constants
+from copy import deepcopy
+from pm4py.objects.dcr.obj import Relations
 
-
+I = Relations.I.value
+E = Relations.E.value
+R = Relations.R.value
+N = Relations.N.value
+C = Relations.C.value
+M = Relations.M.value
 def parse_element(curr_el, parent, dcr):
     tag = curr_el.tag.lower()
     match tag:
@@ -117,8 +124,27 @@ def import_xml_tree_from_root(root):
                     'pending': set()
                     }
     }
+    dcr = parse_element(root, None, dcr)
+    dcr = clean_input(dcr)
+    return dcr
 
-    return parse_element(root, None, dcr)
+
+def clean_input(dcr):
+    # remove all space characters and put conditions an milestones in the correct order (according to the actual arrows)
+    for k, v in deepcopy(dcr).items():
+        if k in [I, E, C, R, M]:
+            v_new = {}
+            for k2, v2 in v.items():
+                v_new[k2.strip().replace(' ', '')] = set([v3.strip().replace(' ', '') for v3 in v2])
+            dcr[k] = v_new
+        elif k == 'marking':
+            for k2 in ['executed', 'included', 'pending']:
+                new_v = set([v2.strip().replace(' ', '') for v2 in dcr[k][k2]])
+                dcr[k][k2] = new_v
+        else:
+            new_v = set([v2.strip().replace(' ', '') for v2 in dcr[k]])
+            dcr[k] = new_v
+    return dcr
 
 
 def apply(path, parameters=None):

@@ -34,7 +34,7 @@ def run_analysis_on_pnmls(datasets_folder):
     df = pd.DataFrame(analysis_results).T
     df.to_csv('models/analysis/optimization_analysis.csv')
 
-def run_dcrxml_files(folder_with_dcr_xmls):
+def run_dcrxml_files(folder_with_dcr_xmls,override=False):
     dcrxml_res = []
 
     for root, dirs, files in os.walk(folder_with_dcr_xmls):
@@ -48,10 +48,10 @@ def run_dcrxml_files(folder_with_dcr_xmls):
 
     with ThreadPoolExecutor(16) as tpe:
             # futures = [tpe.submit(print, dcrxml) for dcrxml in dcrxml_res]
-            futures = [tpe.submit(run_one_dcrxml_all_optimizations_file, dcrxml,False,2*60) for dcrxml in dcrxml_res]
-    with ThreadPoolExecutor(16) as tpe:
-            # futures = [tpe.submit(print, dcrxml) for dcrxml in dcrxml_res]
-            futures = [tpe.submit(run_one_dcrxml_all_optimizations_file, dcrxml,False,2*60) for dcrxml in dcrxml_res2]
+            futures = [tpe.submit(run_one_dcrxml_all_optimizations_file, dcrxml,override,2*60) for dcrxml in dcrxml_res]
+    # with ThreadPoolExecutor(16) as tpe:
+    #         # futures = [tpe.submit(print, dcrxml) for dcrxml in dcrxml_res]
+    #         futures = [tpe.submit(run_one_dcrxml_all_optimizations_file, dcrxml,override,2*60) for dcrxml in dcrxml_res2]
     #         # for future in futures:
     #             # res = future.result(timeout=10*60)
     #             # print(f'[i] res: {res}')
@@ -82,12 +82,12 @@ def run_one_dcrxml_all_optimizations_file(input_dcrxml_path, override=False, rea
         [input_dcrxml_path, f'{path_without_extension}_fulloptimization.pnml', True, True, False,'fulloptimization'],
     ]
     for mapping_call in dcrxml_files:
-        if os.path.isfile(mapping_call[1]):# and not override:
-        #     print(f'[i] File {Path(mapping_call[1]).stem} already exists.')
-        #     pass
-        # else:
+        if os.path.isfile(mapping_call[1]) and not override:
+            print(f'[i] File {Path(mapping_call[1]).stem} already exists.')
+            pass
+        else:
             d2p = Dcr2PetriTransport(preoptimize=mapping_call[2], postoptimize=mapping_call[3],
-                                     map_unexecutable_events=mapping_call[4])
+                                     map_unexecutable_events=mapping_call[4],debug=False)
             d2p.print_steps = True
             d2p.reachability_timeout = 60*10 #10 minutes
             if reachability_timeout:
@@ -101,5 +101,9 @@ def run_one_dcrxml_all_optimizations_file(input_dcrxml_path, override=False, rea
 if __name__ == '__main__':
     # run_one_dcrxml_all_optimizations_file('/home/vco/Datasets/Hospital_log.dcrxml')
     # run_one_dcrxml_all_optimizations_file('/home/vco/Datasets/12683249/Road_Traffic_Fine_Management_Process.dcrxml',override=True)
-    run_dcrxml_files('/home/vco/Datasets/')
+    #run_one_dcrxml_all_optimizations_file('/home/vco/Projects/dcr-to-tapn/models/results/Road_Traffic_Fine_Management_Process.dcrxml', override=True)
+    # run_one_dcrxml_all_optimizations_file('/home/vco/Projects/dcr-to-tapn/models/debug/Road_Traffic_Fine_Management_Process_test.dcrxml', override=True)
+    # run_dcrxml_files('/home/vco/Datasets/')
+
+    run_dcrxml_files('models/results/',override=True)
     print('[i] Done!')

@@ -1,0 +1,99 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<pnml>
+  <net id="net1" type="http://www.pnml.org/version-2009/grammar/pnml">
+    <page id="n0">
+      <place id="pending_Accepted">
+        <name>
+          <text>pending_Accepted</text>
+        </name>
+      </place>
+      <place id="included_Unmatched">
+        <name>
+          <text>included_Unmatched</text>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+      </place>
+      <place id="pending_Completed">
+        <name>
+          <text>pending_Completed</text>
+        </name>
+      </place>
+      <transition id="event_Accepted0">
+        <name>
+          <text>event_Accepted0_label</text>
+        </name>
+      </transition>
+      <transition id="event_Queued0">
+        <name>
+          <text>event_Queued0_label</text>
+        </name>
+      </transition>
+      <transition id="pend_Accepted0">
+        <name>
+          <text>pend_Accepted0_label</text>
+        </name>
+      </transition>
+      <transition id="pend_Completed0">
+        <name>
+          <text>pend_Completed0_label</text>
+        </name>
+      </transition>
+      <transition id="event_Completed0">
+        <name>
+          <text>event_Completed0_label</text>
+        </name>
+      </transition>
+      <transition id="event_Unmatched0">
+        <name>
+          <text>event_Unmatched0_label</text>
+        </name>
+      </transition>
+      <transition id="event_Queued1">
+        <name>
+          <text>event_Queued1_label</text>
+        </name>
+      </transition>
+      <transition id="event_Accepted1">
+        <name>
+          <text>event_Accepted1_label</text>
+        </name>
+      </transition>
+      <transition id="pend_Accepted1">
+        <name>
+          <text>pend_Accepted1_label</text>
+        </name>
+      </transition>
+      <transition id="event_Unmatched1">
+        <name>
+          <text>event_Unmatched1_label</text>
+        </name>
+      </transition>
+      <arc id="140114752829968" source="pending_Completed" target="pend_Accepted0" type="inhibitor"/>
+      <arc id="140114752829328" source="pending_Completed" target="pend_Accepted1"/>
+      <arc id="140114753396240" source="pending_Accepted" target="pend_Accepted0"/>
+      <arc id="140114753397648" source="pending_Completed" target="pend_Completed0"/>
+      <arc id="140114753397008" source="pending_Completed" target="event_Completed0" type="inhibitor"/>
+      <arc id="140114752827280" source="event_Queued1" target="pending_Accepted"/>
+      <arc id="140114752827920" source="pending_Accepted" target="event_Queued0" type="inhibitor"/>
+      <arc id="140114752828304" source="pending_Accepted" target="event_Accepted1" type="inhibitor"/>
+      <arc id="140114752829456" source="event_Accepted0" target="pending_Completed"/>
+      <arc id="140114752830352" source="included_Unmatched" target="event_Unmatched1"/>
+      <arc id="140114752830480" source="event_Unmatched1" target="pending_Completed"/>
+      <arc id="140114752830992" source="pending_Completed" target="event_Unmatched0" type="inhibitor"/>
+      <arc id="140114752829008" source="pending_Completed" target="event_Accepted1"/>
+      <arc id="140114752829776" source="pend_Accepted0" target="pending_Completed"/>
+      <arc id="140114752829136" source="pend_Accepted1" target="pending_Completed"/>
+      <arc id="140114758750288" source="pending_Accepted" target="event_Accepted0" type="inhibitor"/>
+      <arc id="140114753398736" source="included_Unmatched" target="event_Unmatched0"/>
+      <arc id="140114752827600" source="pending_Accepted" target="event_Queued1"/>
+      <arc id="140114752827728" source="event_Queued0" target="pending_Accepted"/>
+      <arc id="140114752828752" source="pending_Accepted" target="pend_Accepted1"/>
+      <arc id="140114752829648" source="pending_Completed" target="event_Accepted0" type="inhibitor"/>
+      <arc id="140114752828880" source="event_Accepted1" target="pending_Completed"/>
+      <arc id="140114752830672" source="pending_Completed" target="event_Unmatched1"/>
+      <arc id="140114752830800" source="event_Unmatched0" target="pending_Completed"/>
+    </page>
+  </net>
+</pnml>

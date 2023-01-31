@@ -1,5 +1,12 @@
 from enum import Enum
 from collections import Counter
+class Relations(Enum):
+    I = 'includesTo'
+    E = 'excludesTo'
+    R = 'responseTo'
+    N = 'noResponseTo'
+    C = 'conditionsFor'
+    M = 'milestonesFor'
 
 class DCR(object):
 

@@ -2,79 +2,74 @@
 <pnml>
   <net id="net1" type="http://www.pnml.org/version-2009/grammar/pnml">
     <page id="n0">
-      <place id="pending_included_admission">
-        <name>
-          <text>pending_included_admission</text>
-        </name>
-        <initialMarking>
-          <text>1</text>
-        </initialMarking>
-      </place>
-      <place id="pending_included_ED out">
-        <name>
-          <text>pending_included_ED out</text>
-        </name>
-        <initialMarking>
-          <text>1</text>
-        </initialMarking>
-      </place>
-      <place id="executed_ED out">
-        <name>
-          <text>executed_ED out</text>
-        </name>
-      </place>
-      <place id="pending_included_death">
-        <name>
-          <text>pending_included_death</text>
-        </name>
-        <initialMarking>
-          <text>1</text>
-        </initialMarking>
-      </place>
       <place id="executed_death">
         <name>
           <text>executed_death</text>
         </name>
       </place>
-      <place id="executed_admission">
+      <place id="included_EDout">
         <name>
-          <text>executed_admission</text>
-        </name>
-      </place>
-      <place id="executed_ED reg">
-        <name>
-          <text>executed_ED reg</text>
-        </name>
-      </place>
-      <place id="pending_included_discharge">
-        <name>
-          <text>pending_included_discharge</text>
+          <text>included_EDout</text>
         </name>
         <initialMarking>
           <text>1</text>
         </initialMarking>
+      </place>
+      <place id="executed_EDout">
+        <name>
+          <text>executed_EDout</text>
+        </name>
       </place>
       <place id="executed_discharge">
         <name>
           <text>executed_discharge</text>
         </name>
       </place>
-      <place id="pending_included_ED reg">
+      <place id="included_admission">
         <name>
-          <text>pending_included_ED reg</text>
+          <text>included_admission</text>
         </name>
         <initialMarking>
           <text>1</text>
         </initialMarking>
       </place>
-      <transition id="init_ED out0">
+      <place id="executed_admission">
         <name>
-          <text>init_ED out0_label</text>
+          <text>executed_admission</text>
         </name>
-      </transition>
-      <transition id="init_discharge0">
+      </place>
+      <place id="included_death">
         <name>
-          <text>init_discharge0_label</text>
+          <text>included_death</text>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+      </place>
+      <place id="included_EDreg">
+        <name>
+          <text>included_EDreg</text>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+      </place>
+      <place id="executed_EDreg">
+        <name>
+          <text>executed_EDreg</text>
+        </name>
+      </place>
+      <place id="included_discharge">
+        <name>
+          <text>included_discharge</text>
+        </name>
+        <initialMarking>
+          <text>1</text>
+        </initialMarking>
+      </place>
+      <transition id="init_admission0">
+        <name>
+          <text>init_admission0_label</text>
         </name>
       </transition>
       <transition id="init_death0">
@@ -82,31 +77,36 @@
           <text>init_death0_label</text>
         </name>
       </transition>
-      <transition id="init_ED reg0">
+      <transition id="init_discharge0">
         <name>
-          <text>init_ED reg0_label</text>
+          <text>init_discharge0_label</text>
         </name>
       </transition>
-      <transition id="init_admission0">
+      <transition id="init_EDout0">
         <name>
-          <text>init_admission0_label</text>
+          <text>init_EDout0_label</text>
         </name>
       </transition>
-      <arc id="140402963211792" source="executed_death" target="init_death0" type="inhibitor"/>
-      <arc id="140402963204624" source="executed_ED out" target="init_ED out0" type="inhibitor"/>
-      <arc id="140402963215440" source="init_ED reg0" target="executed_ED reg"/>
-      <arc id="140402961154576" source="init_admission0" target="executed_admission"/>
-      <arc id="140402963207824" source="pending_included_discharge" target="init_discharge0"/>
-      <arc id="140402961154704" source="executed_admission" target="init_admission0" type="inhibitor"/>
-      <arc id="140402963215568" source="executed_ED reg" target="init_ED reg0" type="inhibitor"/>
-      <arc id="140402963211664" source="init_death0" target="executed_death"/>
-      <arc id="140402963207952" source="init_discharge0" target="executed_discharge"/>
-      <arc id="140402963204368" source="pending_included_ED out" target="init_ED out0"/>
-      <arc id="140402963211536" source="pending_included_death" target="init_death0"/>
-      <arc id="140402963208080" source="executed_discharge" target="init_discharge0" type="inhibitor"/>
-      <arc id="140402963204496" source="init_ED out0" target="executed_ED out"/>
-      <arc id="140402961154448" source="pending_included_admission" target="init_admission0"/>
-      <arc id="140402963215312" source="pending_included_ED reg" target="init_ED reg0"/>
+      <transition id="init_EDreg0">
+        <name>
+          <text>init_EDreg0_label</text>
+        </name>
+      </transition>
+      <arc id="140114746674704" source="included_death" target="init_death0"/>
+      <arc id="140114746685456" source="included_admission" target="init_admission0"/>
+      <arc id="140114746674832" source="init_death0" target="executed_death"/>
+      <arc id="140114746682000" source="included_discharge" target="init_discharge0"/>
+      <arc id="140114746685584" source="init_admission0" target="executed_admission"/>
+      <arc id="140114746754768" source="included_EDout" target="init_EDout0"/>
+      <arc id="140114746678480" source="included_EDreg" target="init_EDreg0"/>
+      <arc id="140114746674960" source="executed_death" target="init_death0" type="inhibitor"/>
+      <arc id="140114746685712" source="executed_admission" target="init_admission0" type="inhibitor"/>
+      <arc id="140114746682128" source="init_discharge0" target="executed_discharge"/>
+      <arc id="140114746754896" source="init_EDout0" target="executed_EDout"/>
+      <arc id="140114746678608" source="init_EDreg0" target="executed_EDreg"/>
+      <arc id="140114746682256" source="executed_discharge" target="init_discharge0" type="inhibitor"/>
+      <arc id="140114746755024" source="executed_EDout" target="init_EDout0" type="inhibitor"/>
+      <arc id="140114746678736" source="executed_EDreg" target="init_EDreg0" type="inhibitor"/>
     </page>
   </net>
 </pnml>
