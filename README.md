@@ -11,4 +11,4 @@ pip install -r requirements.txt
 
 To test the script run the ``notebooks_projects/dcrtotapn.ipynb`` jupyter notebook
 
-The setup has been tested with python version 3.11.0.
+The setup has been tested with python version 3.11.0 with pyenv virtual environments on a linux machine.
