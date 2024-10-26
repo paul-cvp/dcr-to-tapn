@@ -4,9 +4,11 @@ For the models used in the paper see the ``models`` folder
 
 ## Installation
 
-Create a python virual environment and install the ``requirements.txt`` file
+Create a python virtual environment and install the ``requirements.txt`` file
 ```
 pip install -r requirements.txt
 ```
 
 To test the script run the ``notebooks_projects/dcrtotapn.ipynb`` jupyter notebook
+
+The setup has been tested with python version 3.11.0.
